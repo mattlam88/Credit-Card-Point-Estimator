@@ -15,17 +15,17 @@ class BudgetDAO:
         self.conn.commit()
 
     def delete_budget(self, id):
-        self.cur.execute(f"DELETE FROM budget WHERE id = {record_num};")
+        self.cur.execute(f"DELETE FROM budget WHERE id = {id};")
         self.conn.commit()
 
-    def edit_budget(self, record_no, data):
+    def edit_budget(self, id, data):
         self.cur.execute(
-            f"UPDATE budget SET username={data[0]},restaurant_spend={data[1]}, grocery_spend={data[2]},non_cat_spend={data[3]},utility_spend={data[4]},gas_spend={data[5]} WHERE id={record_no};")
+            f"UPDATE budget SET username={data[0]},restaurant_spend={data[1]}, grocery_spend={data[2]},non_cat_spend={data[3]},utility_spend={data[4]},gas_spend={data[5]} WHERE id={id};")
         self.conn.commit()
 
 
 class Budget:
-    def __init__(self, id=0, username, month, restaurant_spend, grocery_spend, non_cat_spend, utility_spend, gas_spend):
+    def __init__(self, id=0, username=None, month=None, restaurant_spend=0, grocery_spend=0, non_cat_spend=0, utility_spend=0, gas_spend=0):
         self.id = id
         self.username = username
         self.restaurant_spend = restaurant_spend

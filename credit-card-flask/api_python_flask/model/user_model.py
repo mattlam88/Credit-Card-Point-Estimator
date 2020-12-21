@@ -14,7 +14,7 @@ class UserDAO:
         self.conn.commit()
 
     def delete_user(self, id):
-        self.cur.execute(f"DELETE FROM users WHERE id = {record_num};")
+        self.cur.execute(f"DELETE FROM users WHERE id = {id};")
         self.conn.commit()
 
     def edit_user(self, record_no, data):
@@ -23,7 +23,7 @@ class UserDAO:
 
 
 class User:
-    def __init__(self, id=0, first_name, last_name, username, password, credit_card1, credit_card2, credit_card3, budget_ID):
+    def __init__(self, id=0, first_name=None, last_name=None, username=None, password=None, credit_card1=0, credit_card2=0, credit_card3=0, budget_ID=0):
         self.id = id
         self.first_name = first_name
         self.last_name = last_name

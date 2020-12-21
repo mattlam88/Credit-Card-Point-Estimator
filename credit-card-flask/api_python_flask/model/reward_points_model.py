@@ -15,17 +15,17 @@ class RewardPointsDAO:
         self.conn.commit()
 
     def delete_reward_points(self, id):
-        self.cur.execute(f"DELETE FROM rewardPoints WHERE id = {record_num};")
+        self.cur.execute(f"DELETE FROM rewardPoints WHERE id = {id};")
         self.conn.commit()
 
-    def edit_reward_points(self, record_no, data):
+    def edit_reward_points(self, id, data):
         self.cur.execute(
-            f"UPDATE rewardPoints SET reward_type={data[0]},reward_point_value={data[1]} WHERE id={record_no};")
+            f"UPDATE rewardPoints SET reward_type={data[0]},reward_point_value={data[1]} WHERE id={id};")
         self.conn.commit()
 
 
 class RewardPoints:
-    def __init__(self, id=0, reward_type, reward_point_value):
+    def __init__(self, id=0, reward_type=None, reward_point_value=0):
         self.id = id
         self.reward_type = reward_type
         self.reward_point_value = reward_point_value

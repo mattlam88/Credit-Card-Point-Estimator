@@ -15,17 +15,17 @@ class CreditCardDAO:
         self.conn.commit()
 
     def delete_credit_card(self, id):
-        self.cur.execute(f"DELETE FROM creditCardDetails WHERE id = {record_num};")
+        self.cur.execute(f"DELETE FROM creditCardDetails WHERE id = {id};")
         self.conn.commit()
 
-    def edit_credit_card(self, record_no, data):
+    def edit_credit_card(self, id, data):
         self.cur.execute(
-            f"UPDATE creditCardDetails SET brand={data[0]},card_type={data[1]}, reward_type={data[2]},restaurant_mult={data[3]},non_cat_mult={data[4]},gas_mult={data[5]} WHERE id={record_no};")
+            f"UPDATE creditCardDetails SET brand={data[0]},card_type={data[1]}, reward_type={data[2]},restaurant_mult={data[3]},non_cat_mult={data[4]},gas_mult={data[5]} WHERE id={id};")
         self.conn.commit()
 
 
 class CreditCard:
-    def __init__(self, id=0, brand, card_type, reward_type, restaurant_mult, grocery_mult, non_cat_mult, utility_mult, gas_mult):
+    def __init__(self, id=0, brand=None, card_type=None, reward_type=None, restaurant_mult=0, grocery_mult=0, non_cat_mult=0, utility_mult=0, gas_mult=0):
         self.id = id
         self.brand = brand
         self.card_type = card_type
