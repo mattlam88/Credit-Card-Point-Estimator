@@ -54,6 +54,7 @@ c.execute(
         id INTEGER PRIMARY KEY,
         username TEXT,
         month TEXT,
+        year INTEGER,
         restaurantSpend INTEGER,
         grocerySpend INTEGER,
         nonCategorySpend INTEGER,
@@ -68,6 +69,7 @@ c.execute(
     CREATE TABLE yearlyBudget (
         id INTEGER PRIMARY KEY,
         username TEXT,
+        year INTEGER,
         janSpendTotal INTEGER,
         janPointsTotal INTEGER,
         febSpendTotal INTEGER,

@@ -24,12 +24,13 @@ class YearlyBudgetDAO:
 
 
 class YearlyBudget:
-    def __init__(self, username=None, jan_spend_total=0, feb_spend_total=0, mar_spend_total=0, apr_spend_total=0, may_spend_total=0,
+    def __init__(self, username=None,year=0, jan_spend_total=0, feb_spend_total=0, mar_spend_total=0, apr_spend_total=0, may_spend_total=0,
                  june_spend_total=0, july_spend_total=0, aug_spend_total=0, sept_spend_total=0, oct_spend_total=0, nov_spend_total=0,
                  dec_spend_total=0,yearly_spend_total=0, jan_points_total=0, feb_points_total=0, mar_points_total=0, apr_points_total=0, may_points_total=0,
                  june_points_total=0, july_points_total=0, aug_points_total=0, sept_points_total=0, oct_points_total=0, nov_points_total=0,
                  dec_points_total=0, yearly_points_total=0):
         self.username = username
+        self.year = year
         self.jan_spend_total = jan_spend_total
         self.feb_spend_total = feb_spend_total
         self.mar_spend_total = mar_spend_total
