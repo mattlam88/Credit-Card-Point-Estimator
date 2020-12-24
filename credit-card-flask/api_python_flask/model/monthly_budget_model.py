@@ -6,8 +6,8 @@ class MonthlyBudgetDAO:
         self.conn = sqlite3.connect("creditCard.db")
         self.cur = self.conn.cursor()
 
-    def get_monthly_budget(self, id):
-        self.cur.execute(f"SELECT * FROM monthlyBudget WHERE id = {id}")
+    def get_monthly_budget(self, username, month):
+        self.cur.execute(f"SELECT restaurantSpend, grocerySpend, nonCategorySpend, utilitySpend, gasSpend FROM monthlyBudget WHERE id = {username}, {month}")
 
     def add_monthly_budget(self, data):
         self.cur.execute(
@@ -22,6 +22,10 @@ class MonthlyBudgetDAO:
         self.cur.execute(
             f"UPDATE monthlyBudget SET username={data[0]},restaurant_spend={data[1]}, grocery_spend={data[2]},non_cat_spend={data[3]},utility_spend={data[4]},gas_spend={data[5]} WHERE id={id};")
         self.conn.commit()
+
+
+
+    def 
 
 
 class MonthlyBudget:

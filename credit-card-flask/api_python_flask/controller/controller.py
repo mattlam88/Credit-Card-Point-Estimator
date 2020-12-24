@@ -22,23 +22,27 @@ class Controller:
         cur.close()
         # this function will add up each monthly spend by year
 
+
     def calc_total_yearly_spend(self, year):
         conn = sqlite3.connect('creditCard.db')
         cur = conn.cursor()
 
-        yearly_spend = f"SELECT {year} SUM(restaurantSpend, grocerySpend, nonCategorySpend, utilitySpend, gasSpend) FROM monthlyBudget GROUP BY {year};"
+        yearly_spend = f"SELECT {year} SUM(janSpendTotal, febSpendTotal, marSpendTotal, aprSpendTotal, maySpendTotal, juneSpendTotal, julySpendTotal, augSpendTotal, septSpendTotal, octSpendTotal, novSpendTotal, decSpendTotal) FROM yearlyBudget GROUP BY {year};"
         insert_yearly_spend_total = f"INSERT INTO yearlyBudget ({year},yearly_spend_total) VALUES (?,?);"
 
         cur.execute(yearly_spend, insert_yearly_spend_total)
         cur.close()
-        # this function will sum up 
-    
+        # this function will sum up
+
     def calc_budget_rewards(self):
-        # this needs to be updated
         conn = sqlite3.connect('creditCard.db')
         cur = conn.cursor()
 
-        yearly_spend = f"SELECT {year} SUM(restaurantSpend, grocerySpend, nonCategorySpend, utilitySpend, gasSpend) FROM monthlyBudget GROUP BY {year};"
+        monthBudget_join_rewardPoints = """
+        SELECT id FROM yearlyTable
+        INNER JOIN rewardPoints ON yearlyTable.column = rewardPoints.column;
+        """
+
         insert_yearly_spend_total = f"INSERT INTO yearlyBudget ({year},yearly_spend_total) VALUES (?,?);"
 
         cur.execute(yearly_spend, insert_yearly_spend_total)
@@ -47,14 +51,18 @@ class Controller:
         # this function will take the budget table and credit card details to calculate total rewards collected
 
     def calc_rewards_exp_value(self):
-        # this needs to be updated
-        conn = sqlite3.connect('creditCard.db')
-        cur = conn.cursor()
-
-        yearly_spend = f"SELECT {year} SUM(restaurantSpend, grocerySpend, nonCategorySpend, utilitySpend, gasSpend) FROM monthlyBudget GROUP BY {year};"
-        insert_yearly_spend_total = f"INSERT INTO yearlyBudget ({year},yearly_spend_total) VALUES (?,?);"
-
-        cur.execute(yearly_spend, insert_yearly_spend_total)
-        cur.close()
         # this function will take the total rewards collected and multiply it by its "FMV"
         pass
+
+
+class MonthlyBudgetService:
+    def __init__(self):
+        pass
+    def calculate_monthly_budget():
+        # this will use DAO to query the database to get the monthly spend information and then run the addition operation, then the DAO will save/update the database.
+        months = [jan, feb, mar, apr, may, june, july, aug, sept, oct, nov, dec]
+        # imagine this a for loop
+        monthly_spend = MonthlyBudgetDAO.get_monthly_budget(username,months)
+
+        
+
