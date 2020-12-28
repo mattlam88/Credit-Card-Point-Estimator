@@ -11,29 +11,6 @@ class Controller:
     def __init__(self):
         pass
 
-    def calc_total_monthly_spend(self, year, month):
-        conn = sqlite3.connect('creditCard.db')
-        cur = conn.cursor()
-
-        monthly_spend = f"SELECT {year}, {month} SUM(restaurantSpend, grocerySpend, nonCategorySpend, utilitySpend, gasSpend) FROM monthlyBudget GROUP BY {year}, {month};"
-        insert_monthly_spend_total = f"INSERT INTO yearlyBudget ({year},{month}_spend_total) VALUES (?,?);"
-
-        cur.execute(monthly_spend, insert_monthly_spend_total)
-        cur.close()
-        # this function will add up each monthly spend by year
-
-
-    def calc_total_yearly_spend(self, year):
-        conn = sqlite3.connect('creditCard.db')
-        cur = conn.cursor()
-
-        yearly_spend = f"SELECT {year} SUM(janSpendTotal, febSpendTotal, marSpendTotal, aprSpendTotal, maySpendTotal, juneSpendTotal, julySpendTotal, augSpendTotal, septSpendTotal, octSpendTotal, novSpendTotal, decSpendTotal) FROM yearlyBudget GROUP BY {year};"
-        insert_yearly_spend_total = f"INSERT INTO yearlyBudget ({year},yearly_spend_total) VALUES (?,?);"
-
-        cur.execute(yearly_spend, insert_yearly_spend_total)
-        cur.close()
-        # this function will sum up
-
     def calc_budget_rewards(self):
         conn = sqlite3.connect('creditCard.db')
         cur = conn.cursor()
@@ -57,12 +34,25 @@ class Controller:
 
 class MonthlyBudgetService:
     def __init__(self):
-        pass
-    def calculate_monthly_budget():
-        # this will use DAO to query the database to get the monthly spend information and then run the addition operation, then the DAO will save/update the database.
-        months = [jan, feb, mar, apr, may, june, july, aug, sept, oct, nov, dec]
-        # imagine this a for loop
-        monthly_spend = MonthlyBudgetDAO.get_monthly_budget(username,months)
+        self.YearlyBudgetDAO = YearlyBudgetDAO()
 
+    def calculate_monthly_budget(self, id, username, month):
+        monthly_spend = MonthlyBudgetDAO.get_monthly_budget(id,username,month)
+        total_month_spend = monthly_spend[4]+monthly_spend[5]+monthly_spend[6]+monthly_spend[7]+monthly_spend[8]
+        data = [id, username, month, total_month_spend]
+        self.YearlyBudgetDAO.add_yearly_budget(data)
+        # this will sum up each month by adding up each category spend
+
+
+class YearlyBudgetServce:
+    def __init__(self):
+        self.YearlyBudgetDAO = YearlyBudgetDAO()
+
+    def calc_total_yearly_spend(self, username, year):
+        yearly_spend = YearlyBudgetDAO.get_yearly_budget(username, year)
+        total_yearly_spend = yearly_spend[2] + yearly_spend[3] + yearly_spend[4] + yearly_spend[5] + yearly_spend[6] + yearly_spend[7] + yearly_spend[8] + yearly_spend[9] + yearly_spend[10] + yearly_spend[11] + yearly_spend[12] + yearly_spend[13]
+        data = [username, year, total_yearly_spend]
+        self.YearlyBudgetDAO.edit_yearly_budget(username, year, data)
+        # this function will sum up
         
 

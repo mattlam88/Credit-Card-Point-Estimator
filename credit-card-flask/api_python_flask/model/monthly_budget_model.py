@@ -6,8 +6,14 @@ class MonthlyBudgetDAO:
         self.conn = sqlite3.connect("creditCard.db")
         self.cur = self.conn.cursor()
 
-    def get_monthly_budget(self, username, month):
-        self.cur.execute(f"SELECT restaurantSpend, grocerySpend, nonCategorySpend, utilitySpend, gasSpend FROM monthlyBudget WHERE id = {username}, {month}")
+    def get_monthly_budget(self, id, username, month):
+        cursor = self.cur.execute(
+            f"SELECT restaurantSpend, grocerySpend, nonCategorySpend, utilitySpend, gasSpend FROM monthlyBudget WHERE id = {username}, {month}")
+        for row in cursor:
+            month_spend = MonthlyBudget(
+                id, username, month, 2020, row[0], row[1], row[2], row[3], row[4])
+            return month_spend
+        self.conn.commit()
 
     def add_monthly_budget(self, data):
         self.cur.execute(
@@ -24,10 +30,6 @@ class MonthlyBudgetDAO:
         self.conn.commit()
 
 
-
-    def 
-
-
 class MonthlyBudget:
     def __init__(self, id=0, username=None, month=None, year=0,
                  restaurant_spend=0, grocery_spend=0, non_cat_spend=0,
@@ -41,4 +43,3 @@ class MonthlyBudget:
         self.non_cat_spend = non_cat_spend
         self.utility_spend = utility_spend
         self.gas_spend = gas_spend
-
