@@ -31,8 +31,8 @@ class YearlyBudgetDAO:
 
     def edit_yearly_spend_total(self, username, year, data):
         self.cur.execute(
-            f""
-        )
+            f"UPDATE budget SET yearlySpendTotal WHERE username={username}, year={year};")
+
         self.conn.commit()
         # will update to include code to edit yearly total spend for a user
 
