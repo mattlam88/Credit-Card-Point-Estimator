@@ -13,6 +13,7 @@ c.execute(
     """
     CREATE TABLE creditCardDetails (
         id INTEGER PRIMARY KEY,
+        username TEXT,
         brand TEXT,
         creditCardType TEXT, 
         rewardType TEXT,
@@ -32,17 +33,11 @@ c.execute(
         firstName TEXT,
         lastName TEXT,
         username TEXT,
-        password BLOB,
-        creditCardOneID INTEGER,
-        creditCardTwoID INTEGER,
-        creditCardThreeID INTEGER,
-        budgetID INTEGER,
-        creditCardOnePointsTotal INTEGER,
-        creditCardTwoPointsTotal INTEGER,
-        creditCardThreePointsTotal INTEGER,
-        creditCardOnePointsFMV INTEGER,
-        creditCardTwoPointsFMV INTEGER,
-        creditCardThreePointsFMV INTEGER
+        maxRestaurantMultiplier INTEGER,
+        maxGroceryMultiplier INTEGER,
+        maxNonCategoryMultiplier INTEGER,
+        maxUtilityMultiplier INTEGER,
+        maxGasMultiplier INTEGER
 
     );
     """
@@ -53,7 +48,7 @@ c.execute(
     CREATE TABLE monthlyBudget (
         id INTEGER PRIMARY KEY,
         username TEXT,
-        month TEXT,
+        month TEXT
         year INTEGER,
         restaurantSpend INTEGER,
         grocerySpend INTEGER,
@@ -70,32 +65,11 @@ c.execute(
         id INTEGER PRIMARY KEY,
         username TEXT,
         year INTEGER,
-        janSpendTotal INTEGER,
-        janPointsTotal INTEGER,
-        febSpendTotal INTEGER,
-        febPointsTotal INTEGER,
-        marSpendTotal INTEGER,
-        marPointsTotal INTEGER,
-        aprSpendTotal INTEGER,
-        aprPointsTotal INTEGER,
-        maySpendTotal INTEGER,
-        mayPointsTotal INTEGER,
-        juneSpendTotal INTEGER,
-        junePointsTotal INTEGER,
-        julySpendTotal INTEGER,
-        julyPointsTotal INTEGER,
-        augSpendTotal INTEGER,
-        augPointsTotal INTEGER,
-        septSpendTotal INTEGER,
-        septPointsTotal INTEGER,
-        octSpendTotal INTEGER,
-        octPointsTotal INTEGER,
-        novSpendTotal INTEGER,
-        novPointsTotal INTEGER,
-        decSpendTotal INTEGER,
-        decPointsTotal INTEGER,
-        yearlySpendTotal INTEGER,
-        yearlyPointsTotal INTEGER
+        restaurantSpendYearly INTEGER,
+        grocerySpendYearly INTEGER,
+        nonCategorySpendYearly INTEGER,
+        utilitySpendYearly INTEGER,
+        gasSpendYearly INTEGER
     );
     """
 )

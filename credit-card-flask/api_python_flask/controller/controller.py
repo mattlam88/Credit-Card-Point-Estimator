@@ -15,7 +15,7 @@ class MonthlyBudgetService:
     def __init__(self):
         self.YearlyBudgetDAO = YearlyBudgetDAO()
 
-    def calculate_monthly_budget(self, id, username, month):
+    def calculate_category_monthly_budget(self, id, username, month):
         monthly_spend = MonthlyBudgetDAO.get_monthly_budget(id,username,month)
         total_month_spend = monthly_spend[4]+monthly_spend[5]+monthly_spend[6]+monthly_spend[7]+monthly_spend[8]
         data = [id, username, month, total_month_spend]
@@ -35,21 +35,16 @@ class YearlyBudgetServce:
 
 class RewardPointsService:
     def __init__(self):
+        self.YearlyBudgetDAO = YearlyBudgetDAO()
+        self.CreditCardDAO = CreditCardDAO()
+
+    def calc_reward_points_monthly(self, username, month, credit_card_id):
         pass
 
-    def calc_reward_points(self):
-        conn = sqlite3.connect('creditCard.db')
-        cur = conn.cursor()
+    def calc_reward_points_yearly(self,username, year, credit_card_id):
+        yearly_spend = YearlyBudgetDAO.get_yearly_spend_total(username, year)
+        pass
 
-        monthBudget_join_rewardPoints = """
-        SELECT id FROM yearlyTable
-        INNER JOIN rewardPoints ON yearlyTable.column = rewardPoints.column;
-        """
-
-        insert_yearly_spend_total = f"INSERT INTO yearlyBudget ({year},yearly_spend_total) VALUES (?,?);"
-
-        cur.execute(yearly_spend, insert_yearly_spend_total)
-        cur.close()
 
 
 class FMVRewardsPointsService:
