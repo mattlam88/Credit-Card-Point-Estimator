@@ -54,7 +54,8 @@ c.execute(
         grocerySpend INTEGER,
         nonCategorySpend INTEGER,
         utilitySpend INTEGER,
-        gasSpend INTEGER
+        gasSpend INTEGER,
+        monthlySpend INTEGER
     );
     """
 )
@@ -69,7 +70,8 @@ c.execute(
         grocerySpendYearly INTEGER,
         nonCategorySpendYearly INTEGER,
         utilitySpendYearly INTEGER,
-        gasSpendYearly INTEGER
+        gasSpendYearly INTEGER,
+        yearlySpend INTEGER
     );
     """
 )

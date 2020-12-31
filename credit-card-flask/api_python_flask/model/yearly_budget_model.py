@@ -8,71 +8,47 @@ class YearlyBudgetDAO:
 
     def get_yearly_budget(self, username, year):
         cursor = self.cur.execute(
-            f"SELECT janSpendTotal, febSpendTotal, marSpendTotal, aprSpendTotal, maySpendTotal, juneSpendTotal, julySpendTotal, augSpendTotal, septSpendTotal, octSpendTotal, novSpendTotal, decSpendTotal FROM yearlyBudget WHERE id = {username}, {year}")
+            f"SELECT restaurantSpendYearly, grocerySpendYearly, nonCategorySpendYearly, utiliySpendYearly, gasSpendYearly FROM yearlyBudget WHERE username = {username} AND year = {year};")
         for row in cursor:
             year_spend = YearlyBudget(
-                username, year, row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9], row[10], row[11])
+                username, year, row[0], row[1], row[2], row[3], row[4])
             return year_spend
         self.conn.commit()
 
     def add_yearly_budget(self, data):
         self.cur.execute(
-            f"INSERT INTO budget (username, month, restaurant_spend, grocery_spend, non_cat_spend, utility_spend, gas_spend) VALUES (?,?,?,?,?,?,?);", data)
+            f"INSERT INTO yearlyBudget (username, year, restaurantSpendYearly, grocerySpendYearly, nonCategorySpendYearly, utilitySpendYearly, gasSpendYearly) VALUES (?,?,?,?,?,?,?);", data)
         self.conn.commit()
 
     def delete_yearly_budget(self, id):
-        self.cur.execute(f"DELETE FROM budget WHERE id = {id};")
+        self.cur.execute(f"DELETE FROM yearlyBudget WHERE id = {id};")
         self.conn.commit()
 
     def edit_yearly_budget(self, id, data):
         self.cur.execute(
-            f"UPDATE budget SET username={data[0]},restaurant_spend={data[1]}, grocery_spend={data[2]},non_cat_spend={data[3]},utility_spend={data[4]},gas_spend={data[5]} WHERE id={id};")
+            f"UPDATE yearlyBudget SET username={data[0]}, year={data[1]}, restaurantSpendYearly={data[2]}, grocerySpendYearly={data[3]}, nonCategorySpendYearly={data[4]}, utilitySpendYearly={data[5]}, gasSpendYearly={data[6]} WHERE id={id};")
         self.conn.commit()
 
-    def edit_yearly_spend_total(self, username, year, data):
+    def edit_total_yearly_category_spend(self, username, year, total_yearly_category_spend):
         self.cur.execute(
-            f"UPDATE budget SET yearlySpendTotal WHERE username={username}, year={year};")
+            f"UPDATE yearlyBudget SET restaurantSpendYearly={total_yearly_spend[0]}, grocerySpendYearly={total_yearly_spend[1]}, nonCategorySpendYearly={total_yearly_spend[2]}, utilitySpendYearly={total_yearly_spend[3]}, gasSpendYearly={total_yearly_spend[4]} WHERE username={username} AND year={year};")
         self.conn.commit()
-        # will update to include code to edit yearly total spend for a user
 
-    def get_yearly_spend_total(self, username, year, data):
+    def edit_total_yearly_spend(self, username, year, total_yearly_spend):
         self.cur.execute(
-            f"SELECT yearlySpendTotal WHERE username={username}, year={year};")
-
+            f"UPDATE yearlyBudget SET yearlySpend={total_yearly_spend} WHERE username={username} AND year={year};")
         self.conn.commit()
 
 
 class YearlyBudget:
-    def __init__(self, username=None, year=0, jan_spend_total=0, feb_spend_total=0, mar_spend_total=0, apr_spend_total=0, may_spend_total=0,
-                 june_spend_total=0, july_spend_total=0, aug_spend_total=0, sept_spend_total=0, oct_spend_total=0, nov_spend_total=0,
-                 dec_spend_total=0, yearly_spend_total=0, jan_points_total=0, feb_points_total=0, mar_points_total=0, apr_points_total=0, may_points_total=0,
-                 june_points_total=0, july_points_total=0, aug_points_total=0, sept_points_total=0, oct_points_total=0, nov_points_total=0,
-                 dec_points_total=0, yearly_points_total=0):
+    def __init__(self, id=0, username=None, year=0, restaurant_spend_yearly=0, grocery_spend_yearly=0, non_category_spend_yearly=0, utility_spend_yearly=0,  gas_spend_yearly=0, yearly_spend=0):
+        self.id = id
         self.username = username
         self.year = year
-        self.jan_spend_total = jan_spend_total
-        self.feb_spend_total = feb_spend_total
-        self.mar_spend_total = mar_spend_total
-        self.apr_spend_total = apr_spend_total
-        self.may_spend_total = may_spend_total
-        self.june_spend_total = june_spend_total
-        self.july_spend_total = july_spend_total
-        self.aug_spend_total = aug_spend_total
-        self.sept_spend_total = sept_spend_total
-        self.oct_spend_total = oct_spend_total
-        self.nov_spend_total = nov_spend_total
-        self.dec_spend_total = dec_spend_total
-        self.yearly_spend_total = yearly_spend_total
-        self.jan_points_total = jan_points_total
-        self.feb_points_total = feb_points_total
-        self.mar_points_total = mar_points_total
-        self.apr_points_total = apr_points_total
-        self.may_points_total = may_points_total
-        self.june_points_total = june_points_total
-        self.july_points_total = july_points_total
-        self.aug_points_total = aug_points_total
-        self.sept_points_total = sept_points_total
-        self.oct_points_total = oct_points_total
-        self.nov_points_total = nov_points_total
-        self.dec_points_total = dec_points_total
-        self.yearly_points_total = yearly_points_total
+        self.restaurant_spend_yearly = restaurant_spend_yearly
+        self.grocery_spend_yearly = grocery_spend_yearly
+        self.non_category_spend_yearly = non_category_spend_yearly
+        self.utility_spend_yearly = utility_spend_yearly
+        self.gas_spend_yearly = gas_spend_yearly
+        self.yearly_spend = yearly_spend
+        

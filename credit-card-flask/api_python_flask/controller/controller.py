@@ -13,30 +13,35 @@ class Controller:
 
 class MonthlyBudgetService:
     def __init__(self):
-        self.YearlyBudgetDAO = YearlyBudgetDAO()
+        self.MonthlyBudgetDAO = MonthlyBudgetDAO()
 
-    def calculate_category_monthly_budget(self, id, username, month):
-        monthly_spend = MonthlyBudgetDAO.get_monthly_budget(id,username,month)
+    def calculate_total_monthly_budget(self, username, month, year):
+        monthly_spend = MonthlyBudgetDAO.get_monthly_budget(username, month, year)
         total_month_spend = monthly_spend[4]+monthly_spend[5]+monthly_spend[6]+monthly_spend[7]+monthly_spend[8]
-        data = [id, username, month, total_month_spend]
-        self.YearlyBudgetDAO.add_yearly_budget(data)
+        self.MonthlyBudgetDAO.edit_monthly_total_spend(username, month, year, total_month_spend)
         # this will sum up each month by adding up each category spend
 
 
 class YearlyBudgetServce:
     def __init__(self):
+        self.MonthlyBudgetDAO = MonthlyBudgetDAO()
         self.YearlyBudgetDAO = YearlyBudgetDAO()
 
+    def calc_total_yearly_category_spend(self, username, year):
+        total_yearly_category_spend = MonthlyBudgetDAO.get_total_monthly_category_spend(username, year)
+        self.YearlyBudgetDAO.edit_total_yearly_category_spend(username, year, total_yearly_category_spend)
+
     def calc_total_yearly_spend(self, username, year):
-        yearly_spend = YearlyBudgetDAO.get_yearly_budget(username, year)
-        total_yearly_spend = yearly_spend[2] + yearly_spend[3] + yearly_spend[4] + yearly_spend[5] + yearly_spend[6] + yearly_spend[7] + yearly_spend[8] + yearly_spend[9] + yearly_spend[10] + yearly_spend[11] + yearly_spend[12] + yearly_spend[13]
+        total_yearly_spend = MonthlyBudgetDAO.get_all_monthly_user_spend(username, year)
         self.YearlyBudgetDAO.edit_yearly_budget(username, year, total_yearly_spend)
-        # this function will sum up
+        # update the yearlySpend table with the total yearly spend by aggregating all of the monthly spend totals
 
 class RewardPointsService:
     def __init__(self):
         self.YearlyBudgetDAO = YearlyBudgetDAO()
         self.CreditCardDAO = CreditCardDAO()
+        self.UserDAO = UserDAO()
+        self.User = User()
 
     def calc_reward_points_monthly(self, username, month, credit_card_id):
         pass
