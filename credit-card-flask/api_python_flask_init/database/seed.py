@@ -21,7 +21,7 @@ c.execute(
         groceryMultiplier INTEGER,
         nonCategoryMultiplier INTEGER,
         utilityMultiplier INTEGER,
-        gasMultiplier INTEGER
+        gasMultiplier INTEGER,
     );
     """
 )
@@ -38,7 +38,6 @@ c.execute(
         maxNonCategoryMultiplier INTEGER,
         maxUtilityMultiplier INTEGER,
         maxGasMultiplier INTEGER
-
     );
     """
 )
@@ -79,6 +78,31 @@ c.execute(
 c.execute(
     """
     CREATE TABLE rewardPoints (
+        id INTEGER PRIMARY KEY,
+        username TEXT,
+        year INTEGER,
+        rewardType TEXT,
+        janPoints INTEGER,
+        febPoints INTEGER,
+        marPoints INTEGER,
+        aprPoints INTEGER,
+        mayPoints INTEGER,
+        junPoints INTEGER,
+        julPoints INTEGER,
+        augPoints INTEGER,
+        sepPoints INTEGER,
+        octPoints INTEGER,
+        novPoints INTEGER,
+        decPoints INTEGER,
+        totalYearPoints INTEGER,
+        pointsFMV INTEGER
+    );
+    """
+)
+
+c.execute(
+    """
+    CREATE TABLE rewardPointsEV (
         id INTEGER PRIMARY KEY,
         rewardType TEXT,
         expectedValue INTEGER
