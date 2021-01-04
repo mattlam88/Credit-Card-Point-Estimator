@@ -6,8 +6,8 @@ class CreditCardDAO:
         self.conn = sqlite3.connect("creditCard.db")
         self.cur = self.conn.cursor()
 
-    def get_credit_card(self, id):
-        self.cur.execute(f"SELECT * FROM creditCardDetails WHERE id = {id}")
+    def get_user_credit_cards(self, username):
+        self.cur.execute(f"SELECT brand, cardType FROM creditCardDetails WHERE username = {username};")
 
     def add_credit_card(self, data):
         self.cur.execute(
