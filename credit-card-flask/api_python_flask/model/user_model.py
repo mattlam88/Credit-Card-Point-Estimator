@@ -50,3 +50,4 @@ class User:
         self.max_noncat_multiplier = max_noncat_multiplier
         self.max_utility_multiplier = max_utility_multiplier
         self.max_gas_multiplier = max_gas_multiplier
+        self.creditcard_mult = CreditMult() 
