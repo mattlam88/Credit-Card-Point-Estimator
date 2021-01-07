@@ -1,4 +1,5 @@
 import sqlite3
+from .user_max_multipliers import UserMaxCreditCardMultDAO, UserMaxCreditCardMult
 
 
 class UserDAO:
@@ -40,14 +41,9 @@ class UserDAO:
 class User:
     def __init__(self, id=0, first_name=None, last_name=None,
                  username=None, max_restaurant_multiplier=0, max_grocery_multiplier=0, max_noncat_multiplier=0,
-                 max_utility_multiplier=0, max_gas_multiplier=0):
+                 max_utility_multiplier=0, max_gas_multiplier=0, user_max_credit_multipliers=None):
         self.id = id
         self.first_name = first_name
         self.last_name = last_name
         self.username = username
-        self.max_restaurant_multiplier = max_restaurant_multiplier
-        self.max_grocery_multiplier = max_grocery_multiplier
-        self.max_noncat_multiplier = max_noncat_multiplier
-        self.max_utility_multiplier = max_utility_multiplier
-        self.max_gas_multiplier = max_gas_multiplier
-        self.creditcard_mult = CreditMult() 
+        self.user_max_credit_multipliers = UserMaxCreditCardMult() 

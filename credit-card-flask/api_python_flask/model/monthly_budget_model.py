@@ -1,25 +1,24 @@
 import sqlite3
 
-
 class MonthlyBudgetDAO:
     def __init__(self):
         self.conn = sqlite3.connect("creditCard.db")
         self.cur = self.conn.cursor()
 
     def get_monthly_budget(self, username, month, year):
-        cursor = self.cur.execute(
+        monthly_budget_data = self.cur.execute(
             f"SELECT restaurantSpend, grocerySpend, nonCategorySpend, utilitySpend, gasSpend FROM monthlyBudget WHERE username = {username} AND month = {month} AND year = {year};")
-        for row in cursor:
+        for data in monthly_budget_data:
             month_spend = MonthlyBudget(
-                id, username, month, year, row[0], row[1], row[2], row[3], row[4])
+                id, username, month, year, data[0], data[1], data[2], data[3], data[4])
             return month_spend
         self.conn.commit()
 
     def get_total_monthly_category_spend(self, username, year):
-        cursor = self.cur.execute(
-            f"SELECT sum(dollars) restaurantSpend, sum(dollars) grocerySpend, sum(dollars) nonCategorySpend, sum(dollars) utilitySpend, sum(dollars) gasSpend FROM monthlyBudget WHERE username = {username} AND year = {year};")
-        for row in cursor:
-            monthly_category_spend = [row[0], row[1], row[2], row[3], row[4]] 
+        total_monthly_category_spend = self.cur.execute(
+            f"SELECT username, year, sum(dollars) restaurantSpend, sum(dollars) grocerySpend, sum(dollars) nonCategorySpend, sum(dollars) utilitySpend, sum(dollars) gasSpend FROM monthlyBudget WHERE username = {username} AND year = {year};")
+        for spend in total_monthly_category_spend:
+            monthly_category_spend = YearlyCategorySpend(spend[0], spend[1], spend[2], spend[3], spend[4], spend[5], spend[6])
         return monthly_category_spend
         
     def get_all_monthly_user_spend(self, username, year):
@@ -63,3 +62,21 @@ class MonthlyBudget:
         self.utility_spend = utility_spend
         self.gas_spend = gas_spend
         self.monthly_spend = monthly_spend
+
+class MonthlySpend:
+    def __init__(self, username=None, month=None, year=0, total_month_spend=0):
+        self.username = username
+        self.jan_spend
+        # will need to add the following months
+
+class YearlyCategorySpend:
+    def __init__(self, username=None, year=0, yearly_restaurant_spend=0, yearly_grocery_spend=0, yearly_non_cat_spend=0, yearly_utility_spend=0, yearly_gas_spend=0):
+        self.username = username
+        self.year = year
+        self.yearly_restaurant_spend = yearly_restaurant_spend
+        self.yearly_grocery_spend = yearly_grocery_spend
+        self.yearly_non_cat_spend = yearly_non_cat_spend
+        self.yearly_utility_spend = yearly_utility_spend
+        self.yearly_gas_spend = yearly_gas_spend
+
+
