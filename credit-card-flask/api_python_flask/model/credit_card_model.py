@@ -1,6 +1,5 @@
 import sqlite3
 
-
 class CreditCardDAO:
     def __init__(self):
         self.conn = sqlite3.connect("creditCard.db")
