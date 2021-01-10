@@ -1,18 +1,11 @@
-from flask import Flask
-
-from .runner import MonthlyBudgetService, YearlyBudgetService, RewardPointsService, FMVRewardsPointsService
-
 
 class Controller:
-    def __init__(self):
-        pass
+
+    def __init__(self, a=None):
+        app = a
 
     @app.route('/')
     def start():
         #will start the program once the website is up and running and return some JSON information
-        pass
+        return {'result': "Hello World"}
 
-app = Flask(__name__)
-
-if __name__ == '__main__':
-    Controller.start()

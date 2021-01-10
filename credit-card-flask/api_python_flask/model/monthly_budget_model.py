@@ -86,7 +86,6 @@ class MonthlyYTDSpend:
         self.oct_spend = oct_spend
         self.nov_spend = nov_spend
         self.dec_spend = dec_spend
-        # will need to add the following months
 
 
 class YearlyCategorySpend:

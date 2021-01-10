@@ -12,12 +12,12 @@ class RewardPointsDAO:
 
     def get_all_monthly_reward_points(self, username, year):
         cursor = self.cur.execute(f"SELECT janPoints, febPoints, marPoints, aprPoints, mayPoints, junPoints, julPoints, augPoints, sepPoints, octPoints, novPoints, decPoints FROM rewardPoints WHERE username={username} AND year={year};")
-        
         yearly_points_balance=[]
         for points in cursor:
             yearly_points_balance.append(points)
-            return yearly_points_balance
+        year_reward_points = RewardPoints(id,username,year,None,yearly_points_balance[0], yearly_points_balance[1], yearly_points_balance[2], yearly_points_balance[3],yearly_points_balance[4], yearly_points_balance[5], yearly_points_balance[6], yearly_points_balance[7], yearly_points_balance[8], yearly_points_balance[9], yearly_points_balance[10], yearly_points_balance[11])    
         self.conn.commit()
+        return year_reward_points
 
     def add_reward_points(self, data):
         self.cur.execute(
@@ -53,9 +53,9 @@ class RewardPointsDAO:
         reward_points_data = []
         for reward_info in cursor:
             reward_points_data.append(reward_info)
-            return reward_points_data
-        self.conn.commit()       
-
+        self.conn.commit()  
+        rewards_data = RewardPointsJoinEV(reward_points_data[0], reward_points_data[1], reward_points_data[2], reward_points_data[3])     
+        return rewards_data
 
 class RewardPoints:
     def __init__(self, id=0, username=None, year=0, reward_type=None,
@@ -80,3 +80,10 @@ class RewardPoints:
         self.dec_points = dec_points
         self.total_year_points = total_year_points
         self.reward_points_FMV = reward_points_FMV
+
+class RewardPointsJoinEV:
+    def __init__(self, username=None, reward_type=None, total_year_points=0, expected_point_value=0):
+        self.username = username
+        self.reward_type = reward_type
+        self.total_year_points = total_year_points
+        self.expected_point_value = expected_point_value
