@@ -12,7 +12,7 @@ export default function UserInfo (props) {
     }
 
     return(
-        
+        <Accordion>
           <Card>
             <Card.Header>
               <Accordion.Toggle as={Button} variant="link" eventKey="0">
