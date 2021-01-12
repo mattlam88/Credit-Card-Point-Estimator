@@ -4,7 +4,7 @@ import { Navbar, Nav } from 'react-bootstrap';
 import Welcome from './components/WelcomeJumbotron';
 import UserInfo from './components/userInfo';
 import PieGraph from './components/CategorySpendGraph';
-import LineBarGraph from './components/PointsMonthlySpendGraph';
+import BarGraph from './components/PointsMonthlySpendGraph';
 import React, { useState, useEffect } from 'react';
 // import NavbarUI from '.components/NavbarUI';
 
@@ -46,7 +46,7 @@ function App() {
       </div>
       <div class="graph_2">
 
-        <LineBarGraph  />
+        <BarGraph  />
 
       </div>
     </div >

@@ -12,4 +12,3 @@ def get_current_time():
 @app.route('/getPieChartData', methods=['POST'])
 def getPIECHART():
     data = request.json
-    x = jsonify(data)
