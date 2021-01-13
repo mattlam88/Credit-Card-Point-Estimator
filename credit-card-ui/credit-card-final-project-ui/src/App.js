@@ -2,7 +2,9 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Navbar, Nav } from 'react-bootstrap';
 import Welcome from './components/WelcomeJumbotron';
-import UserInfo from './components/userInfo';
+import UserInfoName from './components/userInfoName';
+import UserInfoCreditCard from './components/userInfoCreditCard';
+import UserInfoBudget from './components/userInfoBudget';
 import PieGraph from './components/CategorySpendGraph';
 import BarGraph from './components/PointsMonthlySpendGraph';
 import React, { useState, useEffect } from 'react';
@@ -38,7 +40,9 @@ function App() {
       </div>
 
       <div className="userinput">
-        <UserInfo  />
+        <UserInfoName  />
+        <UserInfoCreditCard  />
+        <UserInfoBudget  />
       </div>
 
       <div class="graph_1">
