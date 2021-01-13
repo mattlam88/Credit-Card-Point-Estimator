@@ -8,10 +8,7 @@ import UserInfoBudget from './components/userInfoBudget';
 import PieGraph from './components/CategorySpendGraph';
 import BarGraph from './components/PointsMonthlySpendGraph';
 import React, { useState, useEffect } from 'react';
-// import NavbarUI from '.components/NavbarUI';
-
-
-
+import axios from 'axios';
 
 function App() {
 

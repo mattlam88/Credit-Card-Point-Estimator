@@ -1,5 +1,6 @@
 import { Button, Form, FormControl, InputGroup, Card, Accordion } from 'react-bootstrap';
 import React from 'react';
+import axios from 'axios';
 
 class UserInfoBudget extends React.Component {
 
@@ -16,6 +17,21 @@ class UserInfoBudget extends React.Component {
     };
   }
 
+  onChange = (e) => {
+    this.setState({ [e.target.name]: e.target.value });
+  }
+
+  onSubmit = (e) => {
+    e.preventDefault();
+    const { month, year, restaurantSpend, grocerySpend, nonCategorySpend, utilitySpend, gasSpend } = this.state;
+
+    axios.post('/', {
+      month, year, restaurantSpend, grocerySpend, nonCategorySpend, utilitySpend, gasSpend
+    }).then((result) => {
+      // access the result right here
+    });
+  }
+
   render() {
     return (
       <Accordion>
@@ -30,7 +46,7 @@ class UserInfoBudget extends React.Component {
               <Form>
                 <Form.Group controlId="exampleForm.ControlSelect1">
                   <Form.Label>Select Monthly Budget:</Form.Label>
-                  <Form.Control as="select">
+                  <Form.Control as="select" value={this.state.month} onChange={this.onChange}>
                     <option>January</option>
                     <option>February</option>
                     <option>March</option>
@@ -47,7 +63,7 @@ class UserInfoBudget extends React.Component {
 
                 <Form.Group controlId="exampleForm.ControlSelect1">
                   <Form.Label>Select Year:</Form.Label>
-                  <Form.Control as="select">
+                  <Form.Control as="select" value={this.state.year} onChange={this.onChange}>
                     <option>2020</option>
                     <option>2021</option>
                     <option>2022</option>
@@ -66,7 +82,7 @@ class UserInfoBudget extends React.Component {
                   <InputGroup.Prepend>
                     <InputGroup.Text>$</InputGroup.Text>
                   </InputGroup.Prepend>
-                  <FormControl aria-label="Amount (to the nearest dollar)" />
+                  <FormControl aria-label="Amount (to the nearest dollar)" value={this.state.restaurantSpend} onChange={this.onChange}/>
                   <InputGroup.Append>
                     <InputGroup.Text>.00</InputGroup.Text>
                   </InputGroup.Append>
@@ -77,7 +93,7 @@ class UserInfoBudget extends React.Component {
                   <InputGroup.Prepend>
                     <InputGroup.Text>$</InputGroup.Text>
                   </InputGroup.Prepend>
-                  <FormControl aria-label="Amount (to the nearest dollar)" />
+                  <FormControl aria-label="Amount (to the nearest dollar)" value={this.state.grocerySpend} onChange={this.onChange}/>
                   <InputGroup.Append>
                     <InputGroup.Text>.00</InputGroup.Text>
                   </InputGroup.Append>
@@ -88,7 +104,7 @@ class UserInfoBudget extends React.Component {
                   <InputGroup.Prepend>
                     <InputGroup.Text>$</InputGroup.Text>
                   </InputGroup.Prepend>
-                  <FormControl aria-label="Amount (to the nearest dollar)" />
+                  <FormControl aria-label="Amount (to the nearest dollar)" value={this.state.nonCategorySpend} onChange={this.onChange}/>
                   <InputGroup.Append>
                     <InputGroup.Text>.00</InputGroup.Text>
                   </InputGroup.Append>
@@ -99,7 +115,7 @@ class UserInfoBudget extends React.Component {
                   <InputGroup.Prepend>
                     <InputGroup.Text>$</InputGroup.Text>
                   </InputGroup.Prepend>
-                  <FormControl aria-label="Amount (to the nearest dollar)" />
+                  <FormControl aria-label="Amount (to the nearest dollar)" value={this.state.utilitySpend} onChange={this.onChange}/>
                   <InputGroup.Append>
                     <InputGroup.Text>.00</InputGroup.Text>
                   </InputGroup.Append>
@@ -110,7 +126,7 @@ class UserInfoBudget extends React.Component {
                   <InputGroup.Prepend>
                     <InputGroup.Text>$</InputGroup.Text>
                   </InputGroup.Prepend>
-                  <FormControl aria-label="Amount (to the nearest dollar)" />
+                  <FormControl aria-label="Amount (to the nearest dollar)" value={this.state.gasSpend} onChange={this.onChange}/>
                   <InputGroup.Append>
                     <InputGroup.Text>.00</InputGroup.Text>
                   </InputGroup.Append>
