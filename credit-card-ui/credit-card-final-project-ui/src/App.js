@@ -12,14 +12,6 @@ import axios from 'axios';
 
 function App() {
 
-  const [currentTime, setCurrentTime] = useState(0);
-
-  useEffect(() => {
-    fetch('/time').then(res => res.json()).then(data => {
-      setCurrentTime(data.time);
-    });
-  }, []);
-
   return (
     <div>
       <Navbar bg="dark" expand="lg" variant='dark'>
@@ -31,7 +23,6 @@ function App() {
         </Nav>
       </Navbar.Collapse>
     </Navbar>
-      <p>The current time is {currentTime}.</p>
       <div className='jumbotron-container'>
         <Welcome name='Matt'  /> 
       </div>
