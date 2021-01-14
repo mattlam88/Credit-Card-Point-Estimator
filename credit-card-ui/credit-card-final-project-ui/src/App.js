@@ -6,7 +6,7 @@ import UserInfoName from './components/userInfoName';
 import UserInfoCreditCard from './components/userInfoCreditCard';
 import UserInfoBudget from './components/userInfoBudget';
 import PieGraph from './components/CategorySpendGraph';
-import BarGraph from './components/PointsMonthlySpendGraph';
+import LineGraph from './components/PointsMonthlySpendGraph';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -38,7 +38,7 @@ function App() {
       </div>
       <div class="graph_2">
 
-        <BarGraph  />
+        <LineGraph  />
 
       </div>
     </div >

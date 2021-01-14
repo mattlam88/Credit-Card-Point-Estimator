@@ -1,56 +1,46 @@
-import React from 'react';
-import axios from 'axios'
-import { Card, Accordion, Button } from 'react-bootstrap'
-import { VictoryChart, VictoryBar, VictoryGroup, VictoryStack } from 'victory';
+import React, { Component } from 'react';
+import { Accordion, Card, Button } from 'react-bootstrap'
 
-export default class BarGraph extends React.Component {
+import { Line } from "react-chartjs-2";
+
+const data = {
+  labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+  datasets: [
+    {
+      label: "First dataset",
+      data: [33, 53, 85, 41, 44, 65],
+      fill: true,
+      backgroundColor: "rgba(75,192,192,0.2)",
+      borderColor: "rgba(75,192,192,1)"
+    },
+    {
+      label: "Second dataset",
+      data: [33, 25, 35, 51, 54, 76],
+      fill: false,
+      borderColor: "#742774"
+    }
+  ]
+};
+
+class LineGraph extends React.Component {
     render() {
-
-        const getBarData = () => {
-            return [1, 2, 3, 4, 5].map(() => {
-                return [
-                    { x: 1, y: Math.random() },
-                    { x: 2, y: Math.random() },
-                    { x: 3, y: Math.random() }
-                ];
-            });
-        };
-
         return (
             <Accordion defaultActiveKey="0">
                 <Card>
                     <Card.Header>
-                        <Accordion.Toggle as={Button} variant="link" eventKey="4">
-                            Step 5. View Estimated Points Accumulated
+                        <Accordion.Toggle as={Button} variant="link" eventKey="3">
+                            Step 5. View Yearly Category Spend
                         </Accordion.Toggle>
                     </Card.Header>
-                    <Accordion.Collapse eventKey="4">
+                    <Accordion.Collapse eventKey="3">
                         <Card.Body>
-                            <div>
-                                <VictoryChart domainPadding={{ x: 50 }} width={400} height={400}>
-                                    <VictoryGroup offset={20} style={{ data: { width: 15 } }}>
-                                        <VictoryStack colorScale={"red"}>
-                                            {getBarData().map((data, index) => {
-                                                return <VictoryBar key={index} data={data} />;
-                                            })}
-                                        </VictoryStack>
-                                        <VictoryStack colorScale={"green"}>
-                                            {getBarData().map((data, index) => {
-                                                return <VictoryBar key={index} data={data} />;
-                                            })}
-                                        </VictoryStack>
-                                        <VictoryStack colorScale={"blue"}>
-                                            {getBarData().map((data, index) => {
-                                                return <VictoryBar key={index} data={data} />;
-                                            })}
-                                        </VictoryStack>
-                                    </VictoryGroup>
-                                </VictoryChart>
-                            </div>
+                            <Line data={data} />
                         </Card.Body>
                     </Accordion.Collapse>
                 </Card>
             </Accordion>
-        );
+        )
     }
 }
+
+export default LineGraph;

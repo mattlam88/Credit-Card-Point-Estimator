@@ -7,14 +7,14 @@ class UserInfoCreditCard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      creditCardIssuer: null,
-      creditCardType: null,
-      creditCardRewardPoints: null,
-      restaurantMultiplier: null,
-      groceryMultiplier: null,
-      nonCategoryMultiplier: null,
-      utilityMultiplier: null,
-      gasMultiplier: null,
+      creditCardIssuer: '',
+      creditCardType: '',
+      creditCardRewardPoints: '',
+      restaurantMultiplier: 1,
+      groceryMultiplier: 1,
+      nonCategoryMultiplier: 1,
+      utilityMultiplier: 1,
+      gasMultiplier: 1,
     };
   }
 

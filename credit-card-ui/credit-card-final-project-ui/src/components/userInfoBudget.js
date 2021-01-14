@@ -7,13 +7,13 @@ class UserInfoBudget extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      month: null,
-      year: null,
-      restaurantSpend: null,
-      grocerySpend: null,
-      nonCategorySpend: null,
-      utilitySpend: null,
-      gasSpend: null,
+      month: '',
+      year: 0,
+      restaurantSpend: 0,
+      grocerySpend: 0,
+      nonCategorySpend: 0,
+      utilitySpend: 0,
+      gasSpend: 0,
     };
   }
 

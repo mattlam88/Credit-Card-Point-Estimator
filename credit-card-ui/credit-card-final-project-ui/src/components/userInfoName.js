@@ -1,33 +1,42 @@
 import { Button, Form, Card, Accordion } from 'react-bootstrap';
-import React from 'react';
+import React, { useEffect } from 'react';
 import axios from 'axios';
 
 class UserInfoName extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: null,
-      firstName: null,
-      lastName: null,
+      username: '',
+      firstName: '',
+      lastName: '',
     };
   }
   
-  onChange = (e) => {
-    this.setState({[e.target.name]: e.target.value});
+  onChangeUsername = (e) => {
+    this.setState({username: e.target.value});
   }
 
-  onSubmit = (e) => {
-    e.preventDefault();
-    const {username, firstName, lastName} = this.state;
+  onChangeFirstName = (e) => {
+    this.setState({firstName: e.target.value});
+  }
 
-    axios.post('/', {username, firstName, lastName}).then((result) => {
-      // access the result right here
-    });
+  onChangeLastName = (e) => {
+    this.setState({lastName: e.target.value})
+  }
+  onSubmit = () => {
+    console.log(this.state.username)
+    console.log(this.state.firstName)
+    console.log(this.state.lastName)
+
+    // axios.post('/', {data}).then((result) => {
+    //   console.log(data)
+    // });
   }
 
   
 
   render() {
+
     return (
       <Accordion>
         <Card>
@@ -38,22 +47,22 @@ class UserInfoName extends React.Component {
           </Card.Header>
           <Accordion.Collapse eventKey="0">
             <Card.Body>
-              <Form onSubmit={this.onSubmit}>
+              <Form>
                 <Form.Group controlId="exampleForm.ControlInput1">
                   <Form.Label>Choose Username:</Form.Label>
-                  <Form.Control type="email" placeholder="Username" value={this.state.username} onChange={this.onChange} />
+                  <Form.Control type="username" placeholder="Username" value={this.state.username} onChange={this.onChangeUsername.bind(this)} />
                 </Form.Group>
                 <Form.Group controlId="exampleForm.ControlInput1">
                   <Form.Label>Input First Name:</Form.Label>
-                  <Form.Control type="firstName" placeholder="First Name" value={this.state.firstName} onChange={this.onChange} />
+                  <Form.Control type="firstName" placeholder="First Name" value={this.state.firstName} onChange={this.onChangeFirstName.bind(this)} />
                 </Form.Group>
                 <Form.Group controlId="exampleForm.ControlInput1">
                   <Form.Label>Input Last Name:</Form.Label>
-                  <Form.Control type="lastName" placeholder="Last Name" value={this.state.lastName} onChange={this.onChange} />
+                  <Form.Control type="lastName" placeholder="Last Name" value={this.state.lastName} onChange={this.onChangeLastName.bind(this)} />
                 </Form.Group>
               </Form>
 
-              <Button as="input" type="submit" value="Submit" />{' '}
+              <Button as="input" type="submit" value="Submit" onClick={this.onSubmit} />{' '}
 
             </Card.Body>
           </Accordion.Collapse>
