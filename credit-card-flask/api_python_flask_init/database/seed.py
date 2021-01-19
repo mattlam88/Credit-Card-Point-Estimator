@@ -8,6 +8,9 @@ c.execute("""DROP TABLE IF EXISTS users;""")
 c.execute("""DROP TABLE IF EXISTS monthlyBudget;""")
 c.execute("""DROP TABLE IF EXISTS yearlyBudget;""")
 c.execute("""DROP TABLE IF EXISTS rewardPoints;""")
+c.execute("""DROP TABLE IF EXISTS userInfoForm;""")
+c.execute("""DROP TABLE IF EXISTS userCreditCardForm;""")
+c.execute("""DROP TABLE IF EXISTS userBudgetForm;""")
 
 c.execute(
     """
@@ -21,7 +24,7 @@ c.execute(
         groceryMultiplier INTEGER,
         nonCategoryMultiplier INTEGER,
         utilityMultiplier INTEGER,
-        gasMultiplier INTEGER,
+        gasMultiplier INTEGER
     );
     """
 )
@@ -106,6 +109,50 @@ c.execute(
         id INTEGER PRIMARY KEY,
         rewardType TEXT,
         expectedValue INTEGER
+    );
+    """
+)
+
+c.execute(
+    """
+    CREATE TABLE userInfoForm (
+        id INTEGER PRIMARY KEY,
+        username TEXT,
+        firstName TEXT,
+        lastName TEXT
+    );
+    """
+)
+
+c.execute(
+    """
+    CREATE TABLE userCreditCardForm (
+        id INTEGER PRIMARY KEY,
+        username TEXT,
+        creditCardIssuer TEXT,
+        creditCardType TEXT,
+        creditCardRewardPoints TEXT,
+        restaurantMultiplier INTEGER,
+        groceryMultiplier INTEGER,
+        nonCategoryMultiplier INTEGER,
+        utilityMultiplier INTEGER,
+        gasMultiplier INTEGER
+    );
+    """
+)
+
+c.execute(
+    """
+    CREATE TABLE userBudgetForm (
+        id INTEGER PRIMARY KEY,
+        username TEXT,
+        month TEXT,
+        year INTEGER,
+        restaurantSpend INTEGER,
+        grocerySpend INTEGER,
+        nonCategorySpend INTEGER,
+        utilitySpend INTEGER,
+        gasSpend INTEGER
     );
     """
 )
