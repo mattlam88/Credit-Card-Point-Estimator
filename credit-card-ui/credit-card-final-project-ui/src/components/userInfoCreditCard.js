@@ -42,32 +42,20 @@ class UserInfoCreditCard extends React.Component {
   onChangeGasMultiplier = (e) => {
     this.setState({ gasMultiplier: e.target.value });
   }
- 
-  onSubmitUserInfoCreditCard = () => {
-    console.log(this.state.creditCardIssuer)
-    console.log(this.state.creditCardType)
-    console.log(this.state.creditCardRewardPoints)
-    console.log(this.state.restaurantMultiplier)
-    console.log(this.state.groceryMultiplier)
-    console.log(this.state.nonCategoryMultiplier)
-    console.log(this.state.utilityMultiplier)
-    console.log(this.state.gasMultiplier)
 
-    axios.post('http://localhost:5000/', {
-      creditCardIssuer: this.state.creditCardIssuer,
-      creditCardType: this.state.creditCardType,
-      creditCardRewardPoints: this.state.creditCardRewardPoints,
-      restaurantMultiplier: this.state.restaurantMultiplier,
-      groceryMultiplier: this.state.groceryMultiplier,
-      nonCategoryMultiplier: this.state.nonCategoryMultiplier,
-      utilityMultiplier: this.state.utilityMultiplier,
-      gasMultiplier: this.state.gasMultiplier
-    }).then((result) => {
-      console.log(result)
-    });
+  onSubmitUserInfoCreditCard = () => {
+    console.log(this.state)
+
+    axios
+      .post('http://localhost:5000/', this.state)
+      .then((result) => {
+        console.log(result)
+      });
   }
 
   render() {
+    const { creditCardIssuer, creditCardType, creditCardRewardPoints, restaurantMultiplier, groceryMultiplier, nonCategoryMultiplier, utilityMultiplier, gasMultiplier } = this.state
+
     return (
       <Accordion>
         <Card>
@@ -80,13 +68,13 @@ class UserInfoCreditCard extends React.Component {
             <Card.Body>
               <Form.Group controlId="exampleForm.ControlSelect1">
                 <Form.Label>Select Credit Card Issuer:</Form.Label>
-                <Form.Control as="select" value={this.state.creditCardIssuer} onChange={this.onChangeCreditCardIssuer.bind(this)}>
+                <Form.Control as="select" value={creditCardIssuer} onChange={this.onChangeCreditCardIssuer.bind(this)}>
                   <option>Chase</option>
                 </Form.Control>
               </Form.Group>
               <Form.Group controlId="exampleForm.ControlSelect1">
                 <Form.Label>Select Credit Card Type:</Form.Label>
-                <Form.Control as="select"value={this.state.creditCardType} onChange={this.onChangeCreditCardType.bind(this)} >
+                <Form.Control as="select" value={creditCardType} onChange={this.onChangeCreditCardType.bind(this)} >
                   <option>Chase Sapphire Reserve</option>
                   <option>Chase Sapphire Preferred</option>
                   <option>Chase Freedom</option>
@@ -94,13 +82,13 @@ class UserInfoCreditCard extends React.Component {
               </Form.Group>
               <Form.Group controlId="exampleForm.ControlSelect1">
                 <Form.Label>Select Credit Card Reward Points:</Form.Label>
-                <Form.Control as="select" value={this.state.creditCardRewardPoints} onChange={this.onChangeCreditCardRewardPoints.bind(this)}>
+                <Form.Control as="select" value={creditCardRewardPoints} onChange={this.onChangeCreditCardRewardPoints.bind(this)}>
                   <option>Chase Ultimate Rewards (UR)</option>
                 </Form.Control>
               </Form.Group>
               <Form.Group controlId="exampleForm.ControlSelect1">
                 <Form.Label>Select Restaurant Multiplier:</Form.Label>
-                <Form.Control as="select" value={this.state.restaurantMultiplier} onChange={this.onChangeRestaurantMultiplier.bind(this)}>
+                <Form.Control as="select" value={restaurantMultiplier} onChange={this.onChangeRestaurantMultiplier.bind(this)}>
                   <option>1</option>
                   <option>2</option>
                   <option>3</option>
@@ -110,7 +98,7 @@ class UserInfoCreditCard extends React.Component {
               </Form.Group>
               <Form.Group controlId="exampleForm.ControlSelect1">
                 <Form.Label>Select Grocery Multiplier:</Form.Label>
-                <Form.Control as="select" value={this.state.groceryMultiplier} onChange={this.onChangeGroceryMultiplier.bind(this)}>
+                <Form.Control as="select" value={groceryMultiplier} onChange={this.onChangeGroceryMultiplier.bind(this)}>
                   <option>1</option>
                   <option>2</option>
                   <option>3</option>
@@ -120,7 +108,7 @@ class UserInfoCreditCard extends React.Component {
               </Form.Group>
               <Form.Group controlId="exampleForm.ControlSelect1">
                 <Form.Label>Select Non-Category Multiplier:</Form.Label>
-                <Form.Control as="select" value={this.state.nonCategoryMultiplier} onChange={this.onChangeNonCategoryMultiplier.bind(this)}>
+                <Form.Control as="select" value={nonCategoryMultiplier} onChange={this.onChangeNonCategoryMultiplier.bind(this)}>
                   <option>1</option>
                   <option>2</option>
                   <option>3</option>
@@ -130,7 +118,7 @@ class UserInfoCreditCard extends React.Component {
               </Form.Group>
               <Form.Group controlId="exampleForm.ControlSelect1">
                 <Form.Label>Select Utility Multiplier:</Form.Label>
-                <Form.Control as="select" value={this.state.utilityMultiplier} onChange={this.onChangeUtilityMultiplier.bind(this)}>
+                <Form.Control as="select" value={utilityMultiplier} onChange={this.onChangeUtilityMultiplier.bind(this)}>
                   <option>1</option>
                   <option>2</option>
                   <option>3</option>
@@ -140,7 +128,7 @@ class UserInfoCreditCard extends React.Component {
               </Form.Group>
               <Form.Group controlId="exampleForm.ControlSelect1">
                 <Form.Label>Select Gas Multiplier:</Form.Label>
-                <Form.Control as="select" value={this.state.gasMultiplier} onChange={this.onChangeGasMultiplier.bind(this)}>
+                <Form.Control as="select" value={gasMultiplier} onChange={this.onChangeGasMultiplier.bind(this)}>
                   <option>1</option>
                   <option>2</option>
                   <option>3</option>

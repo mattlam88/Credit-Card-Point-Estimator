@@ -23,21 +23,23 @@ class UserInfoName extends React.Component {
   onChangeLastName = (e) => {
     this.setState({ lastName: e.target.value })
   }
-  onSubmitUserInfoName = () => {
-    console.log(this.state.username)
-    console.log(this.state.firstName)
-    console.log(this.state.lastName)
 
-    axios.post('http://localhost:5000/', {
-      username: this.state.username,
-      firstName: this.state.firstName,
-      lastName: this.state.lastName
-    }).then((result) => {
-      console.log(result)
-    });
+  onSubmitUserInfoName = (e) => {
+    console.log(this.state)
+
+    axios
+      .post('http://localhost:5000/', this.state)
+      .then(result => {
+        console.log(result)
+      })
+      .catch(error => {
+        console.log(error)
+      });
   }
 
   render() {
+
+    const { username, firstName, lastName } = this.state
 
     return (
       <Accordion>
@@ -52,15 +54,15 @@ class UserInfoName extends React.Component {
               <Form>
                 <Form.Group controlId="userInfoUsername">
                   <Form.Label>Choose Username:</Form.Label>
-                  <Form.Control type="username" placeholder="Username" value={this.state.username} onChange={this.onChangeUsername.bind(this)} />
+                  <Form.Control type="username" placeholder="Username" value={username} onChange={this.onChangeUsername.bind(this)} />
                 </Form.Group>
                 <Form.Group controlId="userInfoFirstName">
                   <Form.Label>Input First Name:</Form.Label>
-                  <Form.Control type="firstName" placeholder="First Name" value={this.state.firstName} onChange={this.onChangeFirstName.bind(this)} />
+                  <Form.Control type="firstName" placeholder="First Name" value={firstName} onChange={this.onChangeFirstName.bind(this)} />
                 </Form.Group>
                 <Form.Group controlId="userInfoLastName">
                   <Form.Label>Input Last Name:</Form.Label>
-                  <Form.Control type="lastName" placeholder="Last Name" value={this.state.lastName} onChange={this.onChangeLastName.bind(this)} />
+                  <Form.Control type="lastName" placeholder="Last Name" value={lastName} onChange={this.onChangeLastName.bind(this)} />
                 </Form.Group>
               </Form>
 

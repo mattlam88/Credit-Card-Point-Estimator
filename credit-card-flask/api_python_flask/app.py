@@ -6,9 +6,12 @@ import time
 app = Flask(__name__)
 CORS(app)
 
+
 @app.route('/', methods=['POST', 'GET'])
 def index():
-    if request.get_json():
-        return 'JSON post succeeded'
-    return 'Failed'
-    
+    print (request.is_json)
+    content = request.get_json()
+    print (content)
+    return "JSON Posted"
+
+app.run(host='0.0.0.0', port= 5000)
