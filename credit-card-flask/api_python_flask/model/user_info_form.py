@@ -2,11 +2,11 @@ import sqlite3
 
 class UserInfoFormDAO:
     def __init__(self):
-        self.conn = sqlite3.connect("creditCard.db")
+        self.conn = sqlite3.connect('/Users/mattlam/Documents/Coding Bootcamp/Final-Project-Individual-Matt/creditCard.db')
         self.cur = self.conn.cursor()
     
     def add_user_info_form(self, data):
-        self.cur.execute(f"INSERT INTO userInfoForm (username, first_name, last_name,) VALUES (?,?,?);", data)
+        self.cur.execute(f"INSERT INTO userInfoForm (username, firstName, lastName) VALUES (?,?,?);", data)
         self.conn.commit()
 
     def get_user_info_form(self, username):

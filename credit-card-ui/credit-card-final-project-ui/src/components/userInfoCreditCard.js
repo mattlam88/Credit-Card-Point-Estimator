@@ -7,6 +7,7 @@ class UserInfoCreditCard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      username: '',
       creditCardIssuer: 'Chase',
       creditCardType: 'Chase Sapphire Reserve',
       creditCardRewardPoints: 'Chase Ultimate Rewards (UR)',
@@ -18,6 +19,9 @@ class UserInfoCreditCard extends React.Component {
     };
   }
 
+  onChangeUsername = (e) => {
+    this.setState({ username: e.target.value });
+  }
   onChangeCreditCardIssuer = (e) => {
     this.setState({ creditCardIssuer: e.target.value });
   }
@@ -54,7 +58,7 @@ class UserInfoCreditCard extends React.Component {
   }
 
   render() {
-    const { creditCardIssuer, creditCardType, creditCardRewardPoints, restaurantMultiplier, groceryMultiplier, nonCategoryMultiplier, utilityMultiplier, gasMultiplier } = this.state
+    const { username, creditCardIssuer, creditCardType, creditCardRewardPoints, restaurantMultiplier, groceryMultiplier, nonCategoryMultiplier, utilityMultiplier, gasMultiplier } = this.state
 
     return (
       <Accordion>
@@ -66,7 +70,11 @@ class UserInfoCreditCard extends React.Component {
           </Card.Header>
           <Accordion.Collapse eventKey="1">
             <Card.Body>
-              <Form.Group controlId="exampleForm.ControlSelect1">
+              <Form.Group controlId="userInfoUsername">
+                <Form.Label>Enter Username:</Form.Label>
+                <Form.Control type="username" placeholder="Username" value={username} onChange={this.onChangeUsername.bind(this)} />
+              </Form.Group>
+              <Form.Group controlId="creditCardIssuer">
                 <Form.Label>Select Credit Card Issuer:</Form.Label>
                 <Form.Control as="select" value={creditCardIssuer} onChange={this.onChangeCreditCardIssuer.bind(this)}>
                   <option>Chase</option>
@@ -137,7 +145,7 @@ class UserInfoCreditCard extends React.Component {
                 </Form.Control>
               </Form.Group>
 
-              <Button as="input" type="submit" value="Submit" onClick={this.onSubmitUserInfoCreditCard} />{' '}
+              <Button as="input" type="submit" value="SubmitUserCC" onClick={this.onSubmitUserInfoCreditCard} />{' '}
 
             </Card.Body>
           </Accordion.Collapse>
