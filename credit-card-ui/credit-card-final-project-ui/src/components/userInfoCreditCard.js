@@ -51,9 +51,12 @@ class UserInfoCreditCard extends React.Component {
     console.log(this.state)
 
     axios
-      .post('http://localhost:5000/', this.state)
+      .post('/userCreditCard', this.state)
       .then((result) => {
         console.log(result)
+      })
+      .catch(error => {
+        console.log(error)
       });
   }
 
@@ -65,8 +68,8 @@ class UserInfoCreditCard extends React.Component {
         <Card>
           <Card.Header>
             <Accordion.Toggle as={Button} variant="link" eventKey="1">
-              Step 2. Add Credit Cards
-              </Accordion.Toggle>
+              Step 2. Choose Credit Card
+            </Accordion.Toggle>
           </Card.Header>
           <Accordion.Collapse eventKey="1">
             <Card.Body>

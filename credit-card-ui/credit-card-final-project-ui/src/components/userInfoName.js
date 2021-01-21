@@ -28,7 +28,7 @@ class UserInfoName extends React.Component {
     console.log(this.state)
 
     axios
-      .post('http://localhost:5000/', this.state)
+      .post('/userInfo', this.state)
       .then(result => {
         console.log(result)
       })

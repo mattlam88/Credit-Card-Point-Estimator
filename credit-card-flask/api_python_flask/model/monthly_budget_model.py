@@ -33,7 +33,7 @@ class MonthlyBudgetDAO:
 
     def add_monthly_budget(self, data):
         self.cur.execute(
-            f"INSERT INTO monthlyBudget (username, month, year, restaurant_spend, grocery_spend, non_cat_spend, utility_spend, gas_spend) VALUES (?,?,?,?,?,?,?);", data)
+            f"INSERT INTO monthlyBudget (username, month, year, restaurantSpend, grocerySpend, nonCategorySpend, utilitySpend, gasSpend, monthlySpend) VALUES (?,?,?,?,?,?,?,?);", data)
         self.conn.commit()
 
     def delete_monthly_budget(self, id):
@@ -52,7 +52,7 @@ class MonthlyBudgetDAO:
 
 
 class MonthlyBudget:
-    def __init__(self, id=0, username=None, month=None, year=0,
+    def __init__(self, id, username=None, month=None, year=0,
                  restaurant_spend=0, grocery_spend=0, non_cat_spend=0,
                  utility_spend=0, gas_spend=0, monthly_spend=0):
         self.id = id

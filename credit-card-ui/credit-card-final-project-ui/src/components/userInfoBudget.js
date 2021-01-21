@@ -7,6 +7,7 @@ class UserInfoBudget extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      username: '',
       month: 'January',
       year: 2020,
       restaurantSpend: 0,
@@ -15,6 +16,10 @@ class UserInfoBudget extends React.Component {
       utilitySpend: 0,
       gasSpend: 0,
     };
+  }
+
+  onChangeUsername = (e) => {
+    this.setState({ username: e.target.value });
   }
 
   onChangeMonth = (e) => {
@@ -49,15 +54,18 @@ class UserInfoBudget extends React.Component {
     console.log(this.state)
 
     axios
-      .post('http://localhost:5000/', this.state)
+      .post('/userBudget', this.state)
       .then((result) => {
         console.log(result)
+      })
+      .catch(error => {
+        console.log(error)
       });
   }
 
   render() {
-    
-    const { month, year, restaurantSpend, grocerySpend, nonCategorySpend, utilitySpend, gasSpend } = this.state
+
+    const { username, month, year, restaurantSpend, grocerySpend, nonCategorySpend, utilitySpend, gasSpend } = this.state
 
     return (
       <Accordion>
@@ -70,6 +78,11 @@ class UserInfoBudget extends React.Component {
           <Accordion.Collapse eventKey="2">
             <Card.Body>
               <Form>
+                <Form.Group controlId="userInfoUsername">
+                  <Form.Label>Choose Username:</Form.Label>
+                  <Form.Control type="username" placeholder="Username" value={username} onChange={this.onChangeUsername.bind(this)} />
+                </Form.Group>
+
                 <Form.Group controlId="exampleForm.ControlSelect1">
                   <Form.Label>Select Monthly Budget:</Form.Label>
                   <Form.Control as="select" value={month} onChange={this.onChangeMonth.bind(this)}>
