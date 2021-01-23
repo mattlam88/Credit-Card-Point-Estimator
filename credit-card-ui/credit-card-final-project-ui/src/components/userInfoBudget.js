@@ -95,6 +95,7 @@ class UserInfoBudget extends React.Component {
                     <option>July</option>
                     <option>August</option>
                     <option>September</option>
+                    <option>October</option>
                     <option>November</option>
                     <option>December</option>
                   </Form.Control>

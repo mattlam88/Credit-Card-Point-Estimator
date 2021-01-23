@@ -31,7 +31,7 @@ class YearlyBudgetService:
 
     def calc_total_yearly_category_spend(self, username, year):
         total_yearly_category_spend = MonthlyBudgetDAO.get_total_monthly_category_spend(username, year)
-        self.YearlyBudgetDAO.edit_total_yearly_category_spend(username, year, total_yearly_category_spend)
+        self.YearlyBudgetDAO.add_yearly_budget(total_yearly_category_spend)
 
     def calc_total_yearly_spend(self, username, year):
         year_spend = MonthlyBudgetDAO.get_all_monthly_user_spend(username, year)

@@ -8,12 +8,11 @@ class YearlyBudgetDAO:
 
     def get_yearly_budget(self, username, year):
         cursor = self.cur.execute(
-            f"SELECT restaurantSpendYearly, grocerySpendYearly, nonCategorySpendYearly, utiliySpendYearly, gasSpendYearly FROM yearlyBudget WHERE username = {username} AND year = {year};")
+            f"SELECT restaurantSpendYearly, grocerySpendYearly, nonCategorySpendYearly, utilitySpendYearly, gasSpendYearly FROM yearlyBudget WHERE username = {username} AND year = {year};")
         for row in cursor:
             year_spend = YearlyBudget(
-                username, year, row[0], row[1], row[2], row[3], row[4])
-            return year_spend
-        self.conn.commit()
+                id, username, year, row[0], row[1], row[2], row[3], row[4], 0)
+        return year_spend
 
     def add_yearly_budget(self, data):
         self.cur.execute(
@@ -31,7 +30,7 @@ class YearlyBudgetDAO:
 
     def edit_total_yearly_category_spend(self, username, year, total_yearly_category_spend):
         self.cur.execute(
-            f"UPDATE yearlyBudget SET restaurantSpendYearly={total_yearly_spend[0]}, grocerySpendYearly={total_yearly_spend[1]}, nonCategorySpendYearly={total_yearly_spend[2]}, utilitySpendYearly={total_yearly_spend[3]}, gasSpendYearly={total_yearly_spend[4]} WHERE username={username} AND year={year};")
+            f"UPDATE yearlyBudget SET restaurantSpendYearly={total_yearly_category_spend[0]}, grocerySpendYearly={total_yearly_category_spend[1]}, nonCategorySpendYearly={total_yearly_category_spend[2]}, utilitySpendYearly={total_yearly_category_spend[3]}, gasSpendYearly={total_yearly_category_spend[4]} WHERE username={username} AND year={year};")
         self.conn.commit()
 
     def edit_total_yearly_spend(self, username, year, total_yearly_spend):
