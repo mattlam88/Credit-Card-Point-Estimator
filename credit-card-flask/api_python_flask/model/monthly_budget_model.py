@@ -3,12 +3,12 @@ import sqlite3
 
 class MonthlyBudgetDAO:
     def __init__(self):
-        self.conn = sqlite3.connect("creditCard.db")
+        self.conn = sqlite3.connect("/Users/mattlam/Documents/Coding Bootcamp/Final-Project-Individual-Matt/creditCard.db")
         self.cur = self.conn.cursor()
 
     def get_monthly_budget(self, username, month, year):
         monthly_budget_data = self.cur.execute(
-            f"SELECT restaurantSpend, grocerySpend, nonCategorySpend, utilitySpend, gasSpend FROM monthlyBudget WHERE username = {username} AND month = {month} AND year = {year};")
+            f'SELECT restaurantSpend, grocerySpend, nonCategorySpend, utilitySpend, gasSpend FROM monthlyBudget WHERE username = "{username}" AND month = "{month}" AND year = {year};')
         for data in monthly_budget_data:
             month_spend = MonthlyBudget(
                 id, username, month, year, data[0], data[1], data[2], data[3], data[4])
@@ -33,7 +33,7 @@ class MonthlyBudgetDAO:
 
     def add_monthly_budget(self, data):
         self.cur.execute(
-            f"INSERT INTO monthlyBudget (username, month, year, restaurantSpend, grocerySpend, nonCategorySpend, utilitySpend, gasSpend, monthlySpend) VALUES (?,?,?,?,?,?,?,?);", data)
+            f"INSERT INTO monthlyBudget (username, month, year, restaurantSpend, grocerySpend, nonCategorySpend, utilitySpend, gasSpend, monthlySpend) VALUES (?,?,?,?,?,?,?,?,?);", data)
         self.conn.commit()
 
     def delete_monthly_budget(self, id):
@@ -47,8 +47,7 @@ class MonthlyBudgetDAO:
 
     def edit_monthly_total_spend(self, username, month, year, total_month_spend):
         self.cur.execute(
-            f"UPDATE monthlyBudget SET monthlySpend={total_month_spend} WHERE username={username} AND month={month} AND year={year};")
-        self.conn.commit()
+            f'UPDATE monthlyBudget SET monthlySpend={total_month_spend} WHERE username="{username}" AND month="{month}" AND year={year};')
 
 
 class MonthlyBudget:

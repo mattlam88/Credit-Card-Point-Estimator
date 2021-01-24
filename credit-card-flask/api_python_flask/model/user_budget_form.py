@@ -15,7 +15,7 @@ class UserBudgetFormDAO:
     def get_user_budget_form(self, username, year):
         user_budget = {}
 
-        user_budget_info = self.cur.execute(f'SELECT id, username, month, year, restaurantSpend, grocerySpend, nonCategorySpend, utilitySpend, gasSpend FROM userBudgetForm WHERE username={username} AND year={year};')
+        user_budget_info = self.cur.execute(f'SELECT id, username, month, year, restaurantSpend, grocerySpend, nonCategorySpend, utilitySpend, gasSpend FROM userBudgetForm WHERE username="{username}" AND year={year};')
         for info in user_budget_info:
             month = info[2]
             user_budget[month] = UserBudgetForm(info[0], info[1], info[2], info[3], info[4], info[5], info[6], info[7], info[8])

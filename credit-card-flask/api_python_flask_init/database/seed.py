@@ -51,7 +51,7 @@ c.execute(
     CREATE TABLE monthlyBudget (
         id INTEGER PRIMARY KEY,
         username TEXT,
-        month TEXT
+        month TEXT,
         year INTEGER,
         restaurantSpend INTEGER,
         grocerySpend INTEGER,

@@ -13,15 +13,17 @@ class MonthlyBudgetService:
         self.MonthlyBudgetDAO = MonthlyBudgetDAO()
 
     def calculate_total_monthly_budget(self, username, month, year):
-        monthly_spend = MonthlyBudgetDAO.get_monthly_budget(username, month, year)
-        total_month_spend = sum(
-            monthly_spend.restaurant_spend,
-            monthly_spend.grocery_spend,
-            monthly_spend.non_cat_spend, 
-            monthly_spend.utility_spend, 
-            monthly_spend.gas_spend
+        monthly_spend = MonthlyBudgetDAO()
+        month_budget = monthly_spend.get_monthly_budget(username, month, year)
+        total_month_spend = (
+            month_budget.restaurant_spend +
+            month_budget.grocery_spend +
+            month_budget.non_cat_spend +
+            month_budget.utility_spend +
+            month_budget.gas_spend
         )
-        self.MonthlyBudgetDAO.edit_monthly_total_spend(username, month, year, total_month_spend)
+        monthly_budget_DAO = MonthlyBudgetDAO()
+        monthly_budget_DAO.edit_monthly_total_spend(username, month, year, total_month_spend)
         # this will sum up each month by adding up each category spend
 
 class YearlyBudgetService:

@@ -30,7 +30,7 @@ export default class PieGraph extends React.Component {
             '#9bb7d0',
             '#cddbe7'
           ],
-          data: [65, 59, 80, 81, 56]
+          data: [1, 1, 1, 1, 1]
         }
       ]
     };
@@ -40,9 +40,17 @@ export default class PieGraph extends React.Component {
     console.log('hi');
 
     axios
-      .get('/yearlyCategorySpend', this.state.datasets.data)
-      .then((result) => {
-        console.log(result)
+      .get('/yearlyCategorySpend')
+      .then((year_spend_data) => {
+        this.setState({
+          data: [
+            year_spend_data.restaurant_spend,
+            year_spend_data.grocery_spend,
+            year_spend_data.non_category_spend,
+            year_spend_data.utility_spend,
+            year_spend_data.gas_spend
+          ]
+        })
       })
       .catch(error => {
         console.log(error)

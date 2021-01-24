@@ -2,7 +2,7 @@ import sqlite3
 
 class RewardPointsEVDAO:
     def __init__(self):
-        self.conn = sqlite3.connect("creditCard.db")
+        self.conn = sqlite3.connect("/Users/mattlam/Documents/Coding Bootcamp/Final-Project-Individual-Matt/creditCard.db")
         self.cur = self.conn.cursor()
 
     def add_reward_type_EV(self, reward_type, expected_value):

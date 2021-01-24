@@ -4,7 +4,7 @@ from .user_max_multipliers import UserMaxCreditCardMultDAO, UserMaxCreditCardMul
 
 class UserDAO:
     def __init__(self):
-        self.conn = sqlite3.connect("creditCard.db")
+        self.conn = sqlite3.connect("/Users/mattlam/Documents/Coding Bootcamp/Final-Project-Individual-Matt/creditCard.db")
         self.cur = self.conn.cursor()
 
     def get_user(self, username):

@@ -3,7 +3,7 @@ import sqlite3
 
 class YearlyBudgetDAO:
     def __init__(self):
-        self.conn = sqlite3.connect("creditCard.db")
+        self.conn = sqlite3.connect("/Users/mattlam/Documents/Coding Bootcamp/Final-Project-Individual-Matt/creditCard.db")
         self.cur = self.conn.cursor()
 
     def get_yearly_budget(self, username, year):

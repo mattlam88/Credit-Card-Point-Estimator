@@ -77,7 +77,7 @@ def retrive_user_budget():
 @app.route('/yearlyCategorySpend', methods=['GET', 'REQUEST'])
 def get_yearly_category_user_spend():
     # will have to SELECT form data from userBudgetForm and then INSERT INTO monthlyBudget
-    username = 'Matt'
+    username = "Matt"
     year = 2020
     data = UserBudgetFormDAO()
     json_data = data.get_user_budget_form(username, year)
@@ -120,9 +120,6 @@ def get_yearly_category_user_spend():
 
         # Add get request logic here
         return year_spend_data
-
-    if request.is_json():
-        pass
 
 
 if __name__ == '__main__':
