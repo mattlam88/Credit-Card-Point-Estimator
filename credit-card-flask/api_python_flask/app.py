@@ -117,7 +117,7 @@ def get_yearly_category_user_spend():
             'utility_spend': year_spend.utility_spend_yearly,
             'gas_spend': year_spend.gas_spend_yearly
         }
-
+        print(year_spend_data)
         # Add get request logic here
         return year_spend_data
 

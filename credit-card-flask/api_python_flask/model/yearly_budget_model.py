@@ -8,7 +8,7 @@ class YearlyBudgetDAO:
 
     def get_yearly_budget(self, username, year):
         cursor = self.cur.execute(
-            f"SELECT restaurantSpendYearly, grocerySpendYearly, nonCategorySpendYearly, utilitySpendYearly, gasSpendYearly FROM yearlyBudget WHERE username = {username} AND year = {year};")
+            f'SELECT restaurantSpendYearly, grocerySpendYearly, nonCategorySpendYearly, utilitySpendYearly, gasSpendYearly FROM yearlyBudget WHERE username = "{username}" AND year = {year};')
         for row in cursor:
             year_spend = YearlyBudget(
                 id, username, year, row[0], row[1], row[2], row[3], row[4], 0)

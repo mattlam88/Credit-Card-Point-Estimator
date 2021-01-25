@@ -17,7 +17,7 @@ class MonthlyBudgetDAO:
 
     def get_total_monthly_category_spend(self, username, year):
         total_monthly_category_spend = self.cur.execute(
-            f"SELECT username, year, sum(dollars) restaurantSpend, sum(dollars) grocerySpend, sum(dollars) nonCategorySpend, sum(dollars) utilitySpend, sum(dollars) gasSpend FROM monthlyBudget WHERE username = {username} AND year = {year};")
+            f'SELECT username, year, sum(restaurantSpend), sum(grocerySpend), sum(nonCategorySpend), sum(utilitySpend), sum(gasSpend) FROM monthlyBudget WHERE username = "{username}" AND year = {year};')
         for spend in total_monthly_category_spend:
             monthly_category_spend = YearlyCategorySpend(
                 spend[0], spend[1], spend[2], spend[3], spend[4], spend[5], spend[6])

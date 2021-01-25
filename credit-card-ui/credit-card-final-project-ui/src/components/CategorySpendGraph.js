@@ -37,20 +37,49 @@ export default class PieGraph extends React.Component {
   }
 
   onClickUpdatePieChart = (e) => {
-    console.log('hi');
+    console.log(this.state);
 
     axios
       .get('/yearlyCategorySpend')
-      .then((year_spend_data) => {
+      // .then((res) => {
+      //   console.log(res)
+      //   data = res.map(function(item) 
+      //   )
+      // })
+      .then((response) => {
+        console.log(response)
+        console.log(response.data.restaurant_spend)
+
+
+
         this.setState({
-          data: [
-            year_spend_data.restaurant_spend,
-            year_spend_data.grocery_spend,
-            year_spend_data.non_category_spend,
-            year_spend_data.utility_spend,
-            year_spend_data.gas_spend
-          ]
-        })
+          datasets: [
+            {
+              label: 'Category Spend',
+              backgroundColor: [
+                '#2e4a62',
+                '#456f93',
+                '#6993b8',
+                '#9bb7d0',
+                '#cddbe7'
+              ],
+              hoverBackgroundColor: [
+                '#2e4a62',
+                '#456f93',
+                '#6993b8',
+                '#9bb7d0',
+                '#cddbe7'
+              ],
+              data: [
+                response.data.restaurant_spend,
+                response.data.grocery_spend,
+                response.data.non_category_spend,
+                response.data.utility_spend,
+                response.data.gas_spend
+              ]
+            }
+          ]});
+        console.log(this.state)
       })
       .catch(error => {
         console.log(error)
@@ -63,7 +92,7 @@ export default class PieGraph extends React.Component {
       <Accordion defaultActiveKey="0">
         <Card>
           <Card.Header>
-            <Accordion.Toggle as={Button} variant="link" eventKey="3" onClick={this.onClickUpdatePieChart}>
+            <Accordion.Toggle as={Button} variant="link" eventKey="3" onClick={this.onClickUpdatePieChart.bind(this)}>
               Step 4. View Yearly Category Spend
           </Accordion.Toggle>
           </Card.Header>

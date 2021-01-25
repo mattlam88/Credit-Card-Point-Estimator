@@ -32,8 +32,21 @@ class YearlyBudgetService:
         self.YearlyBudgetDAO = YearlyBudgetDAO()
 
     def calc_total_yearly_category_spend(self, username, year):
-        total_yearly_category_spend = MonthlyBudgetDAO.get_total_monthly_category_spend(username, year)
-        self.YearlyBudgetDAO.add_yearly_budget(total_yearly_category_spend)
+        total_yearly_category_spend = MonthlyBudgetDAO()
+        budget_data = total_yearly_category_spend.get_total_monthly_category_spend(username, year)
+        
+        data = [
+            budget_data.username, 
+            budget_data.year,
+            budget_data.yearly_restaurant_spend,
+            budget_data.yearly_grocery_spend,
+            budget_data.yearly_non_cat_spend,
+            budget_data.yearly_utility_spend,
+            budget_data.yearly_gas_spend            
+        ]
+
+        yearly_budget = YearlyBudgetDAO()
+        yearly_budget.add_yearly_budget(data)
 
     def calc_total_yearly_spend(self, username, year):
         year_spend = MonthlyBudgetDAO.get_all_monthly_user_spend(username, year)
