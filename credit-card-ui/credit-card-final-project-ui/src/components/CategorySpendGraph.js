@@ -3,10 +3,6 @@ import axios from 'axios';
 import { Card, Accordion, Button } from 'react-bootstrap'
 import { Doughnut } from 'react-chartjs-2';
 
-// Will need to add components logic here where the setState is updated, google online for this
-
-
-
 export default class PieGraph extends React.Component {
 
   constructor(props) {
@@ -41,16 +37,8 @@ export default class PieGraph extends React.Component {
 
     axios
       .get('/yearlyCategorySpend')
-      // .then((res) => {
-      //   console.log(res)
-      //   data = res.map(function(item) 
-      //   )
-      // })
       .then((response) => {
         console.log(response)
-        console.log(response.data.restaurant_spend)
-
-
 
         this.setState({
           datasets: [

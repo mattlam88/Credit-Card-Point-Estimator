@@ -107,19 +107,27 @@ def get_yearly_category_user_spend():
         # This will add up all the category spend from the monthly budget table and then add into yearly data table
         ytd_budget_spend.calc_total_yearly_category_spend(username, year)
 
-        # This will retrieve data from yearly budget table and return a instance of YearlyBudget
-        year_spend = year_cat_spend.get_yearly_budget(username, year)
+    
+    # This will retrieve data from yearly budget table and return a instance of YearlyBudget
+    year_spend = year_cat_spend.get_yearly_budget(username, year)
 
-        year_spend_data = {
-            'restaurant_spend': year_spend.restaurant_spend_yearly,
-            'grocery_spend': year_spend.grocery_spend_yearly,
-            'non_category_spend': year_spend.non_category_spend_yearly,
-            'utility_spend': year_spend.utility_spend_yearly,
-            'gas_spend': year_spend.gas_spend_yearly
-        }
-        print(year_spend_data)
-        # Add get request logic here
-        return year_spend_data
+    year_spend_data = {
+        'restaurant_spend': year_spend.restaurant_spend_yearly,
+        'grocery_spend': year_spend.grocery_spend_yearly,
+        'non_category_spend': year_spend.non_category_spend_yearly,
+        'utility_spend': year_spend.utility_spend_yearly,
+        'gas_spend': year_spend.gas_spend_yearly
+    }
+    print(year_spend_data)
+    # Add get request logic here
+    return year_spend_data
+
+@app.route('/yearlySpendAndPoints', methods = ['GET', 'REQUEST'])
+def get_yearly_spend_and_points():
+    username = "Matt"
+    year = 2020
+
+    total_month_spend = MonthlyBudgetDAO()
 
 
 if __name__ == '__main__':

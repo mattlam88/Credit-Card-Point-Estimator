@@ -24,9 +24,9 @@ class MonthlyBudgetDAO:
         return monthly_category_spend
 
     def get_all_monthly_user_spend(self, username, year):
-        months=["jan", "feb", "mar", "apr", "may", "june", "july", "aug", "sept", "oct", "nov", "dec"]
-        for month in months:
-            self.cur.execute(f"SELECT sum(dollars) monthlySpend FROM monthlyBudget WHERE username={username} AND year={year} AND month={month};")
+        user_month_spend = {}
+
+        month_spend = self.cur.execute(f'SELECT username, month, year ,sum(monthlySpend) FROM monthlyBudget WHERE username="{username}" AND year={year};')
             monthly_spend_YTD = MonthlyYTDSpend(username, year, month[0], month[1], month[2], month[3], month[4], month[5], month[6], month[7], month[8], month[9], month[10], month[11])
         return monthly_spend_YTD
         # Will need to think through this
