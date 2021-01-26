@@ -7,7 +7,7 @@ from model.user_budget_form import UserBudgetForm, UserBudgetFormDAO
 from model.monthly_budget_model import MonthlyBudget, MonthlyBudgetDAO
 from model.yearly_budget_model import YearlyBudget, YearlyBudgetDAO
 from controller.runner import MonthlyBudgetService, YearlyBudgetService, RewardPointsService, FMVRewardsPointsService
-import time
+import jsons
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
@@ -100,14 +100,12 @@ def get_yearly_category_user_spend():
             0
         ]
         user_budget_data.add_monthly_budget(budget)
-
         # The function will total each month's spend and then edit the table to include the total month's spend
         total_month_spend.calculate_total_monthly_budget(username, key, year)
 
-        # This will add up all the category spend from the monthly budget table and then add into yearly data table
-        ytd_budget_spend.calc_total_yearly_category_spend(username, year)
+    # This will add up all the category spend from the monthly budget table and then add into yearly data table
+    ytd_budget_spend.calc_total_yearly_category_spend(username, year)
 
-    
     # This will retrieve data from yearly budget table and return a instance of YearlyBudget
     year_spend = year_cat_spend.get_yearly_budget(username, year)
 
@@ -122,13 +120,22 @@ def get_yearly_category_user_spend():
     # Add get request logic here
     return year_spend_data
 
-@app.route('/yearlySpendAndPoints', methods = ['GET', 'REQUEST'])
-def get_yearly_spend_and_points():
+@app.route('/monthlySpendAndPoints', methods = ['GET', 'REQUEST'])
+def get_user_monthly_spend():
     username = "Matt"
     year = 2020
 
     total_month_spend = MonthlyBudgetDAO()
+    user_spend = total_month_spend.get_all_monthly_user_spend(username, year)
+    json_data = jsons.dump(user_spend)
+    
+    return json_data
 
+def get_credt_card_points():
+    # First, I need to get the credit data from the userCreditCard Table and send to the creditCardDetails Table
+    # Second, once the information is in the creditCardDetails table, run the runner.py calc_rewards_points_monthly
+    # NOTES: will need to update the table for Reward Points to easily digest
+    pass
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)

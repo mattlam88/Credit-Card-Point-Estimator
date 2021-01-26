@@ -17,7 +17,7 @@ class MonthlyBudgetDAO:
 
     def get_total_monthly_category_spend(self, username, year):
         total_monthly_category_spend = self.cur.execute(
-            f'SELECT username, year, sum(restaurantSpend), sum(grocerySpend), sum(nonCategorySpend), sum(utilitySpend), sum(gasSpend) FROM monthlyBudget WHERE username = "{username}" AND year = {year};')
+            f'SELECT username, year, sum(restaurantSpend), sum(grocerySpend), sum(nonCategorySpend), sum(utilitySpend), sum(gasSpend) FROM monthlyBudget WHERE username = "{username}" AND year = {year} GROUP BY username AND year;')
         for spend in total_monthly_category_spend:
             monthly_category_spend = YearlyCategorySpend(
                 spend[0], spend[1], spend[2], spend[3], spend[4], spend[5], spend[6])
@@ -26,9 +26,13 @@ class MonthlyBudgetDAO:
     def get_all_monthly_user_spend(self, username, year):
         user_month_spend = {}
 
-        month_spend = self.cur.execute(f'SELECT username, month, year ,sum(monthlySpend) FROM monthlyBudget WHERE username="{username}" AND year={year};')
-            monthly_spend_YTD = MonthlyYTDSpend(username, year, month[0], month[1], month[2], month[3], month[4], month[5], month[6], month[7], month[8], month[9], month[10], month[11])
-        return monthly_spend_YTD
+        month_spend = self.cur.execute(f'SELECT id, username, month, year, restaurantSpend, grocerySpend, nonCategorySpend, utilitySpend, gasSpend, monthlySpend FROM monthlyBudget WHERE username="{username}" AND year={year};')
+        for info in month_spend:
+            month = info[2]
+            user_month_spend[month] = MonthlyBudget(info[0], info[1], info[2], info[3], info[4], info[5], info[6], info[7], info[8], info[9])
+        print(user_month_spend)
+       # accessing information user_month_spend['January'].monthlySpend
+        return user_month_spend
         # Will need to think through this
 
     def add_monthly_budget(self, data):
@@ -48,7 +52,7 @@ class MonthlyBudgetDAO:
     def edit_monthly_total_spend(self, username, month, year, total_month_spend):
         self.cur.execute(
             f'UPDATE monthlyBudget SET monthlySpend={total_month_spend} WHERE username="{username}" AND month="{month}" AND year={year};')
-
+        self.conn.commit()
 
 class MonthlyBudget:
     def __init__(self, id, username=None, month=None, year=0,
@@ -64,27 +68,30 @@ class MonthlyBudget:
         self.utility_spend = utility_spend
         self.gas_spend = gas_spend
         self.monthly_spend = monthly_spend
+    
+    def toJSON(self):
+        return self.__dict__
 
 
-class MonthlyYTDSpend:
-    def __init__(self, username=None, year=0, jan_spend=0, feb_spend=0,
-                 mar_spend=0, apr_spend=0, may_spend=0, june_spend=0,
-                 july_spend=0, aug_spend=0, sept_spend=0, oct_spend=0,
-                 nov_spend=0, dec_spend=0):
-        self.username = username
-        self.year = year
-        self.jan_spend = jan_spend
-        self.feb_spend = feb_spend
-        self.mar_spend = mar_spend
-        self.apr_spend = apr_spend
-        self.may_spend = may_spend
-        self.june_spend = june_spend
-        self.july_spend = july_spend
-        self.aug_spend = aug_spend
-        self.sept_spend = sept_spend
-        self.oct_spend = oct_spend
-        self.nov_spend = nov_spend
-        self.dec_spend = dec_spend
+# class MonthlyYTDSpend:
+#     def __init__(self, username=None, year=0, jan_spend=0, feb_spend=0,
+#                  mar_spend=0, apr_spend=0, may_spend=0, june_spend=0,
+#                  july_spend=0, aug_spend=0, sept_spend=0, oct_spend=0,
+#                  nov_spend=0, dec_spend=0):
+#         self.username = username
+#         self.year = year
+#         self.jan_spend = jan_spend
+#         self.feb_spend = feb_spend
+#         self.mar_spend = mar_spend
+#         self.apr_spend = apr_spend
+#         self.may_spend = may_spend
+#         self.june_spend = june_spend
+#         self.july_spend = july_spend
+#         self.aug_spend = aug_spend
+#         self.sept_spend = sept_spend
+#         self.oct_spend = oct_spend
+#         self.nov_spend = nov_spend
+#         self.dec_spend = dec_spend
 
 
 class YearlyCategorySpend:

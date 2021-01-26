@@ -10,7 +10,7 @@ class UserCreditCardFormDAO:
         self.conn.commit()
 
     def get_user_credit_card_form(self, username):
-        user_credit_card_info = self.cur.execute(f'SELECT id, username, creditCardIssuer, creditCardType, creditCardRewardPoints, restaurantMultiplier, groceryMultiplier, nonCategoryMultiplier, utilityMultiplier, gasMultiplier FROM userCreditCardInfo WHERE username={username};')
+        user_credit_card_info = self.cur.execute(f'SELECT id, username, creditCardIssuer, creditCardType, creditCardRewardPoints, restaurantMultiplier, groceryMultiplier, nonCategoryMultiplier, utilityMultiplier, gasMultiplier FROM userCreditCardInfo WHERE username="{username}";')
         for info in user_credit_card_info:
             user_credit_card = UserCreditCardForm(info[0],info[1],info[2],info[3],info[4],info[5],info[6],info[7],info[8],info[9])
         return user_credit_card

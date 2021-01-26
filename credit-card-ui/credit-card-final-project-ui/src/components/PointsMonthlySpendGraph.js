@@ -12,13 +12,13 @@ export default class LineGraph extends React.Component {
             labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
             datasets: [
                 {
-                    label: "Total Month Spend",
+                    label: "Total Month Spend ($)",
                     data: [33, 53, 85, 41, 44, 65, 10, 10, 10, 10, 20, 20],
                     fill: false,
                     borderColor: "#9bb7d0"
                 },
                 {
-                    label: "Second dataset",
+                    label: "Credit Card Points",
                     data: [33, 25, 35, 51, 54, 76, 10, 10, 10, 10, 20, 20],
                     fill: false,
                     borderColor: "#456f93"
@@ -31,7 +31,7 @@ export default class LineGraph extends React.Component {
         console.log(this.state);
     
         axios
-          .get('/yearlySpendAndPoints')
+          .get('/monthlySpendAndPoints')
           .then((response) => {
             console.log(response)
     
@@ -39,7 +39,20 @@ export default class LineGraph extends React.Component {
                 datasets: [
                     {
                         label: "Total Month Spend",
-                        data: [33, 53, 85, 41, 44, 65, 10, 10, 10, 10, 20, 20],
+                        data: [
+                            response.data.January.monthly_spend,
+                            response.data.February.monthly_spend,
+                            response.data.March.monthly_spend,
+                            response.data.April.monthly_spend,
+                            response.data.May.monthly_spend,
+                            response.data.June.monthly_spend,
+                            response.data.July.monthly_spend,
+                            response.data.August.monthly_spend,
+                            response.data.September.monthly_spend,
+                            response.data.October.monthly_spend,
+                            response.data.November.monthly_spend,
+                            response.data.December.monthly_spend
+                        ],
                         fill: false,
                         borderColor: "#9bb7d0"
                     },

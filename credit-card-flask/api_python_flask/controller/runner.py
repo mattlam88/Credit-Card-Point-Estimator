@@ -13,7 +13,7 @@ class MonthlyBudgetService:
         self.MonthlyBudgetDAO = MonthlyBudgetDAO()
 
     def calculate_total_monthly_budget(self, username, month, year):
-        monthly_spend = MonthlyBudgetDAO()
+        monthly_spend = self.MonthlyBudgetDAO
         month_budget = monthly_spend.get_monthly_budget(username, month, year)
         month_total_spend = (
             month_budget.restaurant_spend +
@@ -32,7 +32,7 @@ class YearlyBudgetService:
         self.YearlyBudgetDAO = YearlyBudgetDAO()
 
     def calc_total_yearly_category_spend(self, username, year):
-        total_yearly_category_spend = MonthlyBudgetDAO()
+        total_yearly_category_spend = self.MonthlyBudgetDAO
         budget_data = total_yearly_category_spend.get_total_monthly_category_spend(username, year)
         
         data = [
@@ -45,7 +45,7 @@ class YearlyBudgetService:
             budget_data.yearly_gas_spend            
         ]
 
-        yearly_budget = YearlyBudgetDAO()
+        yearly_budget = self.YearlyBudgetDAO
         yearly_budget.add_yearly_budget(data)
 
     def calc_total_yearly_spend(self, username, year):
@@ -79,17 +79,21 @@ class RewardPointsService:
         self.RewardPoints = RewardPoints()
 
     def calc_reward_points_monthly(self, username, month, year):
-        users_multipliers = UserMaxCreditCardMultDAO.get_max_multipliers(username)
-        month_spend = MonthlyBudgetDAO.get_monthly_budget(username, month, year)
+        users_multipliers = self.UserMaxCreditCardMultDAO
+        users_multipliers.get_max_multipliers(username)
+
+        month_spend = self.MonthlyBudgetDAO
+        month_spend.get_monthly_budget(username, month, year)
 
         restaraunt_points = users_multipliers.restaurant_mult*month_spend.restaurant_spend
         grocery_points = users_multipliers.grocery_mult*month_spend.grocery_spend
         non_category_points = users_multipliers.non_cat_mult*month_spend.non_cat_spend
         utility_points = users_multipliers.utility_mult*month_spend.utility_spend
         gas_points =users_multipliers.gas_mult*month_spend.gas_spend
-        total_monthly_points = sum(restaraunt_points, grocery_points, non_category_points, utility_points, gas_points)
+        total_monthly_points = (restaraunt_points + grocery_points + non_category_points + utility_points + gas_points)
 
-        self.RewardPointsDAO.update_monthly_reward_points(username, month, year, total_monthly_points) 
+        rewards = self.RewardPointsDAO
+        rewards.update_monthly_reward_points(username, month, year, total_monthly_points) 
         # This pulls the max multipliers from the user table and spend from the budgets table
         # The algo then multiplies each category by the respective multiplier, which then updates the rewards point table 
 
