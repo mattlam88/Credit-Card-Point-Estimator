@@ -7,10 +7,11 @@ class CreditCardDAO:
 
     def get_user_credit_cards(self, username):
         self.cur.execute(f"SELECT brand, cardType FROM creditCardDetails WHERE username = {username};")
+        self.conn.commit()
 
     def add_credit_card(self, data):
         self.cur.execute(
-            f"INSERT INTO creditCardDetails (brand, card_type, reward_type, restaurant_mult, grocery_mult, non_cat_mult, utility_mult, gas_mult) VALUES (?,?,?,?,?,?,?,?);", data)
+            f"INSERT INTO creditCardDetails (username, brand, creditCardType, rewardType, restaurantMultiplier, groceryMultiplier, nonCategoryMultiplier, utilityMultiplier, gasMultiplier) VALUES (?,?,?,?,?,?,?,?,?);", data)
         self.conn.commit()
 
     def delete_credit_card(self, id):

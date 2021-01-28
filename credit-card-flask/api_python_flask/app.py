@@ -3,6 +3,9 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from model.user_info_form import UserInfoForm, UserInfoFormDAO
 from model.user_credit_card_form import UserCreditCardForm, UserCreditCardFormDAO
+from model.credit_card_model import CreditCard, CreditCardDAO
+from model.user_max_multipliers import UserMaxCreditCardMult, UserMaxCreditCardMultDAO
+from model.reward_points_model import RewardPoints, RewardPointsDAO
 from model.user_budget_form import UserBudgetForm, UserBudgetFormDAO
 from model.monthly_budget_model import MonthlyBudget, MonthlyBudgetDAO
 from model.yearly_budget_model import YearlyBudget, YearlyBudgetDAO
@@ -120,7 +123,22 @@ def get_yearly_category_user_spend():
     # Add get request logic here
     return year_spend_data
 
-@app.route('/monthlySpendAndPoints', methods = ['GET', 'REQUEST'])
+@app.route('/combinedSpendAndPoints', methods = ['GET'])
+def send_spend_points():
+    json_data = {}
+    username = "Matt"
+    year = 2020
+
+    total_month_spend = MonthlyBudgetDAO()
+    user_spend = total_month_spend.get_all_monthly_user_spend(username, year)
+    json_data['user_spend'] = user_spend
+
+    reward_response = get_credit_card_points()
+    json_data['user_points'] = reward_response
+
+    return jsons.dump(json_data)
+
+@app.route('/monthlySpendAndPoints', methods=['GET', 'REQUEST'])
 def get_user_monthly_spend():
     username = "Matt"
     year = 2020
@@ -128,14 +146,74 @@ def get_user_monthly_spend():
     total_month_spend = MonthlyBudgetDAO()
     user_spend = total_month_spend.get_all_monthly_user_spend(username, year)
     json_data = jsons.dump(user_spend)
-    
+
     return json_data
 
-def get_credt_card_points():
-    # First, I need to get the credit data from the userCreditCard Table and send to the creditCardDetails Table
+
+def get_credit_card_points():
+    # First, I need to get the credit data from the userCreditCardForm Table and send to the creditCardDetails Table
+    username = "Matt"
+    year = 2020
+    months = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+    ]
+
+    user_credit_card_form = UserCreditCardFormDAO()
+    user_cc_data = user_credit_card_form.get_user_credit_card_form(username)
+    data = [
+        user_cc_data.username,
+        user_cc_data.credit_card_issuer,
+        user_cc_data.credit_card_type,
+        user_cc_data.credit_card_reward_points,
+        user_cc_data.restaurant_multiplier,
+        user_cc_data.grocery_multiplier,
+        user_cc_data.non_category_multiplier,
+        user_cc_data.utility_multiplier,
+        user_cc_data.gas_multiplier
+    ]
+
+    cc_detail_DAO = CreditCardDAO()
+    cc_detail_DAO.add_credit_card(data)
+
     # Second, once the information is in the creditCardDetails table, run the runner.py calc_rewards_points_monthly
-    # NOTES: will need to update the table for Reward Points to easily digest
-    pass
+    user_data = [username, year]
+    user_reward_points = RewardPointsDAO()
+    user_reward_points.add_new_user(user_data)
+
+    rewards_calculator = RewardPointsService()
+    for month in months:
+        rewards_calculator.calc_reward_points_monthly(username, month, year)
+
+    reward_points_data = user_reward_points.get_all_monthly_reward_points(
+        username, year)
+    reward_json = {
+        "January": reward_points_data.jan_points,
+        "February": reward_points_data.feb_points,
+        "March": reward_points_data.mar_points,
+        "April": reward_points_data.apr_points,
+        "May": reward_points_data.may_points,
+        "June": reward_points_data.jun_points,
+        "July": reward_points_data.jul_points,
+        "August": reward_points_data.aug_points,
+        "September": reward_points_data.sep_points,
+        "October": reward_points_data.oct_points,
+        "November": reward_points_data.nov_points,
+        "December": reward_points_data.dec_points
+    }
+    return reward_json
+
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)

@@ -9,15 +9,16 @@ class MonthlyBudgetDAO:
     def get_monthly_budget(self, username, month, year):
         monthly_budget_data = self.cur.execute(
             f'SELECT restaurantSpend, grocerySpend, nonCategorySpend, utilitySpend, gasSpend FROM monthlyBudget WHERE username = "{username}" AND month = "{month}" AND year = {year};')
+        self.conn.commit()
         for data in monthly_budget_data:
             month_spend = MonthlyBudget(
                 id, username, month, year, data[0], data[1], data[2], data[3], data[4])
             return month_spend
-        self.conn.commit()
-
+        
     def get_total_monthly_category_spend(self, username, year):
         total_monthly_category_spend = self.cur.execute(
             f'SELECT username, year, sum(restaurantSpend), sum(grocerySpend), sum(nonCategorySpend), sum(utilitySpend), sum(gasSpend) FROM monthlyBudget WHERE username = "{username}" AND year = {year} GROUP BY username AND year;')
+        self.conn.commit()
         for spend in total_monthly_category_spend:
             monthly_category_spend = YearlyCategorySpend(
                 spend[0], spend[1], spend[2], spend[3], spend[4], spend[5], spend[6])
@@ -27,6 +28,7 @@ class MonthlyBudgetDAO:
         user_month_spend = {}
 
         month_spend = self.cur.execute(f'SELECT id, username, month, year, restaurantSpend, grocerySpend, nonCategorySpend, utilitySpend, gasSpend, monthlySpend FROM monthlyBudget WHERE username="{username}" AND year={year};')
+        self.conn.commit()
         for info in month_spend:
             month = info[2]
             user_month_spend[month] = MonthlyBudget(info[0], info[1], info[2], info[3], info[4], info[5], info[6], info[7], info[8], info[9])

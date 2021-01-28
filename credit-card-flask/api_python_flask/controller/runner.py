@@ -8,6 +8,13 @@ from model.user_model import UserDAO, User
 from model.user_max_multipliers import UserMaxCreditCardMult, UserMaxCreditCardMultDAO
 from model.reward_points_expected_value_model import RewardPointsEVDAO, RewardPointsEV
 
+class SaveDB:
+    def __init__(self):
+        self.conn = sqlite3.connect("/Users/mattlam/Documents/Coding Bootcamp/Final-Project-Individual-Matt/creditCard.db")
+        self.cur = self.conn.cursor()
+    def save_db(self):
+        self.conn.commit()
+
 class MonthlyBudgetService:
     def __init__(self):
         self.MonthlyBudgetDAO = MonthlyBudgetDAO()
@@ -74,22 +81,21 @@ class RewardPointsService:
         self.UserDAO = UserDAO()
         self.User = User()
         self.MonthlyBudgetDAO = MonthlyBudgetDAO()
-        self.MonthlyBudget = MonthlyBudget()
         self.RewardPointsDAO = RewardPointsDAO()
         self.RewardPoints = RewardPoints()
 
     def calc_reward_points_monthly(self, username, month, year):
         users_multipliers = self.UserMaxCreditCardMultDAO
-        users_multipliers.get_max_multipliers(username)
+        multipliers = users_multipliers.get_max_multipliers(username)
 
         month_spend = self.MonthlyBudgetDAO
-        month_spend.get_monthly_budget(username, month, year)
+        month_spend_data = month_spend.get_monthly_budget(username, month, year)
 
-        restaraunt_points = users_multipliers.restaurant_mult*month_spend.restaurant_spend
-        grocery_points = users_multipliers.grocery_mult*month_spend.grocery_spend
-        non_category_points = users_multipliers.non_cat_mult*month_spend.non_cat_spend
-        utility_points = users_multipliers.utility_mult*month_spend.utility_spend
-        gas_points =users_multipliers.gas_mult*month_spend.gas_spend
+        restaraunt_points = multipliers.restaurant_mult*month_spend_data.restaurant_spend
+        grocery_points = multipliers.grocery_mult*month_spend_data.grocery_spend
+        non_category_points = multipliers.non_cat_mult*month_spend_data.non_cat_spend
+        utility_points = multipliers.utility_mult*month_spend_data.utility_spend
+        gas_points = multipliers.gas_mult*month_spend_data.gas_spend
         total_monthly_points = (restaraunt_points + grocery_points + non_category_points + utility_points + gas_points)
 
         rewards = self.RewardPointsDAO

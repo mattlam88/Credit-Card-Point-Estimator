@@ -7,11 +7,12 @@ class UserMaxCreditCardMultDAO:
 
     def get_max_multipliers(self, username):
         multipliers = self.cur.execute(
-            f"SELECT {username}, max(restaurantMultiplier), max(groceryMultiplier), max(nonCategoryMultiplier), max(utilityMultiplier), max(gasMultiplier) FROM creditCardDetails GROUP BY {username};")
+            f"SELECT username, max(restaurantMultiplier), max(groceryMultiplier), max(nonCategoryMultiplier), max(utilityMultiplier), max(gasMultiplier) FROM creditCardDetails GROUP BY '{username}';")
+        self.conn.commit()
         for multiplier in multipliers:
             user_max_multipliers = UserMaxCreditCardMult(multiplier[0], multiplier[1], multiplier[2], multiplier[3], multiplier[4], multiplier[5])
             return user_max_multipliers
-        self.conn.commit()
+        
 
 class UserMaxCreditCardMult:
     def __init__(self, username=None, restaurant_mult=0, grocery_mult=0, non_cat_mult=0, utility_mult=0, gas_mult=0):

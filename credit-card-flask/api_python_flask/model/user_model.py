@@ -9,6 +9,7 @@ class UserDAO:
 
     def get_user(self, username):
         self.cur.execute(f"SELECT * FROM users WHERE username = {username}")
+        self.conn.commit()
 
     def add_user(self, data):
         self.cur.execute(

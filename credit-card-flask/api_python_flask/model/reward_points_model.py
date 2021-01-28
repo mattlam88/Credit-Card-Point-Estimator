@@ -11,13 +11,15 @@ class RewardPointsDAO:
         self.conn.commit()
 
     def get_all_monthly_reward_points(self, username, year):
-        cursor = self.cur.execute(f"SELECT janPoints, febPoints, marPoints, aprPoints, mayPoints, junPoints, julPoints, augPoints, sepPoints, octPoints, novPoints, decPoints FROM rewardPoints WHERE username={username} AND year={year};")
-        yearly_points_balance=[]
-        for points in cursor:
-            yearly_points_balance.append(points)
-        year_reward_points = RewardPoints(id,username,year,None,yearly_points_balance[0], yearly_points_balance[1], yearly_points_balance[2], yearly_points_balance[3],yearly_points_balance[4], yearly_points_balance[5], yearly_points_balance[6], yearly_points_balance[7], yearly_points_balance[8], yearly_points_balance[9], yearly_points_balance[10], yearly_points_balance[11])    
+        cursor = self.cur.execute(f'SELECT janPoints, febPoints, marPoints, aprPoints, mayPoints, junPoints, julPoints, augPoints, sepPoints, octPoints, novPoints, decPoints FROM rewardPoints WHERE username="{username}" AND year={year};')
         self.conn.commit()
+        for yearly_points_balance in cursor:
+            year_reward_points = RewardPoints(id,username,year,None,yearly_points_balance[0], yearly_points_balance[1], yearly_points_balance[2], yearly_points_balance[3],yearly_points_balance[4], yearly_points_balance[5], yearly_points_balance[6], yearly_points_balance[7], yearly_points_balance[8], yearly_points_balance[9], yearly_points_balance[10], yearly_points_balance[11])
         return year_reward_points
+
+    def add_new_user(self, data):
+        self.cur.execute(f'INSERT INTO rewardPoints (username, year) VALUES (?,?);', data)
+        self.conn.commit()
 
     def add_reward_points(self, data):
         self.cur.execute(
@@ -34,8 +36,9 @@ class RewardPointsDAO:
         self.conn.commit()
 
     def update_monthly_reward_points(self, username, month, year, points_balance):
-        self.cur.execute(
-            f"UPDATE rewardPoints SET {month}_points = {points_balance} WHERE username={username} AND month={month} AND year={year};")
+        cur = self.conn.cursor()
+        cur.execute(
+            f"UPDATE rewardPoints SET {month[0:3].lower()}Points = {points_balance} WHERE username='{username}' AND year={year};")
         self.conn.commit()
 
     def update_total_year_points(self, username, year, points_balance):

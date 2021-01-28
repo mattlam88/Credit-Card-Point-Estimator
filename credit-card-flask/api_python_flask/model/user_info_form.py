@@ -11,6 +11,7 @@ class UserInfoFormDAO:
 
     def get_user_info_form(self, username):
         user_info = self.cur.execute(f"SELECT username, firstName, lastName FROM userInfoForm WHERE username={username};")
+        self.conn.commit()
         for info in user_info:
             user = UserInfoForm(info[0], info[1], info[2])
         return user

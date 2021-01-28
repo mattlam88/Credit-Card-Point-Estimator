@@ -31,7 +31,7 @@ export default class LineGraph extends React.Component {
         console.log(this.state);
     
         axios
-          .get('/monthlySpendAndPoints')
+          .get('/combinedSpendAndPoints')
           .then((response) => {
             console.log(response)
     
@@ -40,18 +40,18 @@ export default class LineGraph extends React.Component {
                     {
                         label: "Total Month Spend",
                         data: [
-                            response.data.January.monthly_spend,
-                            response.data.February.monthly_spend,
-                            response.data.March.monthly_spend,
-                            response.data.April.monthly_spend,
-                            response.data.May.monthly_spend,
-                            response.data.June.monthly_spend,
-                            response.data.July.monthly_spend,
-                            response.data.August.monthly_spend,
-                            response.data.September.monthly_spend,
-                            response.data.October.monthly_spend,
-                            response.data.November.monthly_spend,
-                            response.data.December.monthly_spend
+                            response.data.user_spend.January.monthly_spend,
+                            response.data.user_spend.February.monthly_spend,
+                            response.data.user_spend.March.monthly_spend,
+                            response.data.user_spend.April.monthly_spend,
+                            response.data.user_spend.May.monthly_spend,
+                            response.data.user_spend.June.monthly_spend,
+                            response.data.user_spend.July.monthly_spend,
+                            response.data.user_spend.August.monthly_spend,
+                            response.data.user_spend.September.monthly_spend,
+                            response.data.user_spend.October.monthly_spend,
+                            response.data.user_spend.November.monthly_spend,
+                            response.data.user_spend.December.monthly_spend
                         ],
                         fill: false,
                         borderColor: "#9bb7d0"
