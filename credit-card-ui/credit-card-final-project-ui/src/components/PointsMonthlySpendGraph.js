@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import axios from 'axios';
 import { Accordion, Card, Button } from 'react-bootstrap'
 
@@ -57,8 +57,21 @@ export default class LineGraph extends React.Component {
                         borderColor: "#9bb7d0"
                     },
                     {
-                        label: "Second dataset",
-                        data: [33, 25, 35, 51, 54, 76, 10, 10, 10, 10, 20, 20],
+                        label: "Credit Card Points",
+                        data: [
+                            response.data.user_points.January,
+                            response.data.user_points.February,
+                            response.data.user_points.March,
+                            response.data.user_points.April,
+                            response.data.user_points.May,
+                            response.data.user_points.June,
+                            response.data.user_points.July,
+                            response.data.user_points.August,
+                            response.data.user_points.September,
+                            response.data.user_points.October,
+                            response.data.user_points.November,
+                            response.data.user_points.December
+                        ],
                         fill: false,
                         borderColor: "#456f93"
                     }

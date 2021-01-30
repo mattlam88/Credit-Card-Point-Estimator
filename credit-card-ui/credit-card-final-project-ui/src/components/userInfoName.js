@@ -42,7 +42,7 @@ class UserInfoName extends React.Component {
     const { username, firstName, lastName } = this.state
 
     return (
-      <Accordion>
+      <Accordion defaultActiveKey="0">
         <Card>
           <Card.Header>
             <Accordion.Toggle as={Button} variant="link" eventKey="0">

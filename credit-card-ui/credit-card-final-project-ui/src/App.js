@@ -7,8 +7,6 @@ import UserInfoCreditCard from './components/userInfoCreditCard';
 import UserInfoBudget from './components/userInfoBudget';
 import PieGraph from './components/CategorySpendGraph';
 import LineGraph from './components/PointsMonthlySpendGraph';
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 
 function App() {
 

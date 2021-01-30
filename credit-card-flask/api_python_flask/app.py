@@ -123,7 +123,8 @@ def get_yearly_category_user_spend():
     # Add get request logic here
     return year_spend_data
 
-@app.route('/combinedSpendAndPoints', methods = ['GET'])
+
+@app.route('/combinedSpendAndPoints', methods=['GET'])
 def send_spend_points():
     json_data = {}
     username = "Matt"
@@ -137,6 +138,7 @@ def send_spend_points():
     json_data['user_points'] = reward_response
 
     return jsons.dump(json_data)
+
 
 @app.route('/monthlySpendAndPoints', methods=['GET', 'REQUEST'])
 def get_user_monthly_spend():
@@ -187,13 +189,21 @@ def get_credit_card_points():
     cc_detail_DAO.add_credit_card(data)
 
     # Second, once the information is in the creditCardDetails table, run the runner.py calc_rewards_points_monthly
-    user_data = [username, year]
     user_reward_points = RewardPointsDAO()
-    user_reward_points.add_new_user(user_data)
 
     rewards_calculator = RewardPointsService()
+    monthly_reward_points = []
     for month in months:
-        rewards_calculator.calc_reward_points_monthly(username, month, year)
+        monthly_reward_points.append(
+            rewards_calculator.calc_reward_points_monthly(username, month, year))
+
+    print(monthly_reward_points)
+    rewards_data = [username, year, 'Chase UR', monthly_reward_points[0], monthly_reward_points[1], monthly_reward_points[2], monthly_reward_points[3],
+                    monthly_reward_points[4], monthly_reward_points[5], monthly_reward_points[6],
+                    monthly_reward_points[7], monthly_reward_points[8], monthly_reward_points[9],
+                    monthly_reward_points[10], monthly_reward_points[11]]
+
+    user_reward_points.insert_new_user_reward_points(rewards_data)
 
     reward_points_data = user_reward_points.get_all_monthly_reward_points(
         username, year)
@@ -212,7 +222,6 @@ def get_credit_card_points():
         "December": reward_points_data.dec_points
     }
     return reward_json
-
 
 
 if __name__ == '__main__':

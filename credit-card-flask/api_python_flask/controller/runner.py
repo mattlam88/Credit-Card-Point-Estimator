@@ -98,8 +98,7 @@ class RewardPointsService:
         gas_points = multipliers.gas_mult*month_spend_data.gas_spend
         total_monthly_points = (restaraunt_points + grocery_points + non_category_points + utility_points + gas_points)
 
-        rewards = self.RewardPointsDAO
-        rewards.update_monthly_reward_points(username, month, year, total_monthly_points) 
+        return total_monthly_points
         # This pulls the max multipliers from the user table and spend from the budgets table
         # The algo then multiplies each category by the respective multiplier, which then updates the rewards point table 
 
