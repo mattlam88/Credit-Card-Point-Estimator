@@ -74,6 +74,9 @@ def retrive_user_budget():
 
     user_budget = UserBudgetFormDAO()
     user_budget.add_user_budget_form(data)
+
+    # Will need to add the monthly functions here so it won't keep running 12 times in the yearlyCategorySpend function
+    # or I can split up the code where it would post into the database and return the json
     return "User Budget JSON Posted"
 
 
@@ -119,7 +122,6 @@ def get_yearly_category_user_spend():
         'utility_spend': year_spend.utility_spend_yearly,
         'gas_spend': year_spend.gas_spend_yearly
     }
-    print(year_spend_data)
     # Add get request logic here
     return year_spend_data
 

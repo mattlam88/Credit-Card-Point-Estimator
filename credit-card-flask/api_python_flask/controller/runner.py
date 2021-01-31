@@ -29,7 +29,6 @@ class MonthlyBudgetService:
             month_budget.utility_spend +
             month_budget.gas_spend
         )
-        print(month_total_spend)
         monthly_spend.edit_monthly_total_spend(username, month, year, month_total_spend)
         # this will sum up each month by adding up each category spend
 
