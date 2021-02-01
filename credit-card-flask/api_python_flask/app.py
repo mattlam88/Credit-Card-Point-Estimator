@@ -95,28 +95,8 @@ def get_yearly_category_user_spend():
     username = "Matt"
     year = 2020
     data = UserBudgetFormDAO()
-    json_data = data.get_user_budget_form(username, year)
-    total_month_spend = MonthlyBudgetService()
     ytd_budget_spend = YearlyBudgetService()
     year_cat_spend = YearlyBudgetDAO()
-
-    # # this will add the form budget data table to the monthly budget table
-    # user_budget_data = MonthlyBudgetDAO()
-    # for key in json_data.keys():
-    #     budget = [
-    #         json_data[key].username,
-    #         json_data[key].month,
-    #         json_data[key].year,
-    #         json_data[key].restaurant_spend,
-    #         json_data[key].grocery_spend,
-    #         json_data[key].non_category_spend,
-    #         json_data[key].utility_spend,
-    #         json_data[key].gas_spend,
-    #         0
-    #     ]
-    #     user_budget_data.add_monthly_budget(budget)
-    #     # The function will total each month's spend and then edit the table to include the total month's spend
-    #     total_month_spend.calculate_total_monthly_budget(username, key, year)
 
     # This will add up all the category spend from the monthly budget table and then add into yearly data table
     ytd_budget_spend.calc_total_yearly_category_spend(username, year)
