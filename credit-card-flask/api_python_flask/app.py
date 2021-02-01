@@ -72,8 +72,17 @@ def retrive_user_budget():
     data = [username, month, year, restaurant_spend, grocery_spend,
             non_category_spend, utility_spend, gas_spend]
 
+    monthly_data = [username, month, year, restaurant_spend, grocery_spend,
+            non_category_spend, utility_spend, gas_spend, 0]
+
     user_budget = UserBudgetFormDAO()
     user_budget.add_user_budget_form(data)
+
+    month_budget = MonthlyBudgetDAO()
+    month_budget.add_monthly_budget(monthly_data)
+
+    monthly_budget_service = MonthlyBudgetService()
+    monthly_budget_service.calculate_total_monthly_budget(username, month, year)
 
     # Will need to add the monthly functions here so it won't keep running 12 times in the yearlyCategorySpend function
     # or I can split up the code where it would post into the database and return the json
@@ -91,23 +100,23 @@ def get_yearly_category_user_spend():
     ytd_budget_spend = YearlyBudgetService()
     year_cat_spend = YearlyBudgetDAO()
 
-    # this will add the form budget data table to the monthly budget table
-    user_budget_data = MonthlyBudgetDAO()
-    for key in json_data.keys():
-        budget = [
-            json_data[key].username,
-            json_data[key].month,
-            json_data[key].year,
-            json_data[key].restaurant_spend,
-            json_data[key].grocery_spend,
-            json_data[key].non_category_spend,
-            json_data[key].utility_spend,
-            json_data[key].gas_spend,
-            0
-        ]
-        user_budget_data.add_monthly_budget(budget)
-        # The function will total each month's spend and then edit the table to include the total month's spend
-        total_month_spend.calculate_total_monthly_budget(username, key, year)
+    # # this will add the form budget data table to the monthly budget table
+    # user_budget_data = MonthlyBudgetDAO()
+    # for key in json_data.keys():
+    #     budget = [
+    #         json_data[key].username,
+    #         json_data[key].month,
+    #         json_data[key].year,
+    #         json_data[key].restaurant_spend,
+    #         json_data[key].grocery_spend,
+    #         json_data[key].non_category_spend,
+    #         json_data[key].utility_spend,
+    #         json_data[key].gas_spend,
+    #         0
+    #     ]
+    #     user_budget_data.add_monthly_budget(budget)
+    #     # The function will total each month's spend and then edit the table to include the total month's spend
+    #     total_month_spend.calculate_total_monthly_budget(username, key, year)
 
     # This will add up all the category spend from the monthly budget table and then add into yearly data table
     ytd_budget_spend.calc_total_yearly_category_spend(username, year)

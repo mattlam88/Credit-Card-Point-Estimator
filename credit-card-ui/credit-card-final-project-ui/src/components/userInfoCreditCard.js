@@ -148,7 +148,7 @@ class UserInfoCreditCard extends React.Component {
                 </Form.Control>
               </Form.Group>
 
-              <Button as="input" type="submit" value="SubmitUserCC" onClick={this.onSubmitUserInfoCreditCard} />{' '}
+              <Button as="input" type="submit" value="Submit" onClick={this.onSubmitUserInfoCreditCard} />{' '}
 
             </Card.Body>
           </Accordion.Collapse>
