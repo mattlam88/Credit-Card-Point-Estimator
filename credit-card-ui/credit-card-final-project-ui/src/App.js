@@ -10,6 +10,8 @@ import LineGraph from './components/PointsMonthlySpendGraph';
 
 function App() {
 
+  // use state hook create hook to create username state and then pass it down.
+
   return (
     <div>
       <Navbar bg="dark" expand="lg" variant='dark'>
@@ -27,12 +29,12 @@ function App() {
 
       <div className="userinput">
         <UserInfoName  />
-        <UserInfoCreditCard  />
+        <UserInfoCreditCard  usern={this.state.username}/>
         <UserInfoBudget  />
       </div>
 
       <div class="graph_1">
-        <PieGraph  />
+        <PieGraph  usern={this.state.username}/>
       </div>
       <div class="graph_2">
 

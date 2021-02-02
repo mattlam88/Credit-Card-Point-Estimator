@@ -115,10 +115,10 @@ def get_yearly_category_user_spend():
     return year_spend_data
 
 
-@app.route('/combinedSpendAndPoints', methods=['GET'])
-def send_spend_points():
+@app.route('/combinedSpendAndPoints/<username>', methods=['GET'])
+def send_spend_points(username):
     json_data = {}
-    username = "Matt"
+    # username = "Matt"
     year = 2020
 
     total_month_spend = MonthlyBudgetDAO()

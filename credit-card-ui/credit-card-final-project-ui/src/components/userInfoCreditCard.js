@@ -7,7 +7,7 @@ class UserInfoCreditCard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
+      username: this.props.usern,
       creditCardIssuer: 'Chase',
       creditCardType: 'Chase Sapphire Reserve',
       creditCardRewardPoints: 'Chase Ultimate Rewards (UR)',
