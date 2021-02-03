@@ -16,7 +16,7 @@ app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
 
 
-@app.route('/userInfo', methods=['POST', 'GET'])
+@app.route('/userInfo/<username>', methods=['POST', 'GET'])
 def retrieve_user_info():
     print(request.is_json)
     req_data = request.get_json()
@@ -125,15 +125,15 @@ def send_spend_points(username):
     user_spend = total_month_spend.get_all_monthly_user_spend(username, year)
     json_data['user_spend'] = user_spend
 
-    reward_response = get_credit_card_points()
+    reward_response = get_credit_card_points(username)
     json_data['user_points'] = reward_response
 
     return jsons.dump(json_data)
 
 
-@app.route('/monthlySpendAndPoints', methods=['GET', 'REQUEST'])
-def get_user_monthly_spend():
-    username = "Matt"
+@app.route('/monthlySpendAndPoints/<username>', methods=['GET', 'REQUEST'])
+def get_user_monthly_spend(username):
+    # username = "Matt"
     year = 2020
 
     total_month_spend = MonthlyBudgetDAO()
@@ -143,9 +143,8 @@ def get_user_monthly_spend():
     return json_data
 
 
-def get_credit_card_points():
+def get_credit_card_points(username):
     # First, I need to get the credit data from the userCreditCardForm Table and send to the creditCardDetails Table
-    username = "Matt"
     year = 2020
     months = [
         "January",

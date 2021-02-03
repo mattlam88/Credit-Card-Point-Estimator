@@ -33,7 +33,7 @@ class UserInfoName extends React.Component {
     console.log(this.state)
 
     axios
-      .post('/userInfo', this.state)
+      .post('/userInfo/{this.state.username}', this.state)
       .then(result => {
         console.log(result)
       })

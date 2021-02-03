@@ -9,6 +9,7 @@ export default class LineGraph extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            username: this.props.username,
             labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
             datasets: [
                 {
@@ -31,11 +32,12 @@ export default class LineGraph extends React.Component {
         console.log(this.state);
     
         axios
-          .get('/combinedSpendAndPoints')
+          .get(`/combinedSpendAndPoints/${this.props.username}`)
           .then((response) => {
             console.log(response)
     
             this.setState({
+                username: this.props.username,
                 datasets: [
                     {
                         label: "Total Month Spend",

@@ -7,10 +7,15 @@ import UserInfoCreditCard from './components/userInfoCreditCard';
 import UserInfoBudget from './components/userInfoBudget';
 import PieGraph from './components/CategorySpendGraph';
 import LineGraph from './components/PointsMonthlySpendGraph';
-import React from "react";
+import React, { useState } from "react";
 
 function App()  {
   const test = data => console.log(data)
+  const [usern, setUsern] = useState("")
+  const updateUsern = (userInfo) => {
+    console.log(userInfo);
+    setUsern(userInfo);
+  }
   // use state hook create hook to create username state and then pass it down.
   
   return (
@@ -25,11 +30,11 @@ function App()  {
       </Navbar.Collapse>
     </Navbar>
       <div className='jumbotron-container'>
-        <Welcome /> 
+        <Welcome name={usern}/> 
       </div>
 
       <div className="userinput">
-        <UserInfoName  onChange={test}/>
+        <UserInfoName  onChange={updateUsern}/>
         <UserInfoCreditCard  />
         <UserInfoBudget  />
       </div>
@@ -39,7 +44,7 @@ function App()  {
       </div>
       <div class="graph_2">
 
-        <LineGraph  />
+        <LineGraph username={usern}/>
 
       </div>
     </div >
