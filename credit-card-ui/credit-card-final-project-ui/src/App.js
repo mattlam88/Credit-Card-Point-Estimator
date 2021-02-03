@@ -10,7 +10,7 @@ import LineGraph from './components/PointsMonthlySpendGraph';
 import React from "react";
 
 function App()  {
-  const usern = data => console.log(data)
+  const test = data => console.log(data)
   // use state hook create hook to create username state and then pass it down.
   
   return (
@@ -29,7 +29,7 @@ function App()  {
       </div>
 
       <div className="userinput">
-        <UserInfoName  onChange={usern}/>
+        <UserInfoName  onChange={test}/>
         <UserInfoCreditCard  />
         <UserInfoBudget  />
       </div>
