@@ -10,6 +10,7 @@ class UserInfoName extends React.Component {
       firstName: '',
       lastName: '',
     };
+    this.sendUsernameToParent = this.sendUsernameToParent.bind(this);
   }
 
   onChangeUsername = (e) => {
@@ -24,6 +25,10 @@ class UserInfoName extends React.Component {
     this.setState({ lastName: e.target.value })
   }
 
+  sendUsernameToParent() {
+    this.props.onChange(this.state.username);
+  }
+
   onSubmitUserInfoName = (e) => {
     console.log(this.state)
 
@@ -35,6 +40,7 @@ class UserInfoName extends React.Component {
       .catch(error => {
         console.log(error)
       });
+    
   }
 
   render() {
@@ -66,7 +72,7 @@ class UserInfoName extends React.Component {
                 </Form.Group>
               </Form>
 
-              <Button as="input" type="submit" value="Submit" onClick={this.onSubmitUserInfoName} />{' '}
+              <Button as="input" type="submit" value="Submit" onClick={this.onSubmitUserInfoName, this.sendUsernameToParent} />{' '}
 
             </Card.Body>
           </Accordion.Collapse>
