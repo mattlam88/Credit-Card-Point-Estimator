@@ -8,6 +8,7 @@ export default class PieGraph extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      username: this.props.usern,
       labels: ['Restaurant', 'Grocery', 'Non-Category', 'Utility', 'Gas'],
       datasets: [
         {
@@ -36,7 +37,7 @@ export default class PieGraph extends React.Component {
     console.log(this.state);
 
     axios
-      .get('/yearlyCategorySpend')
+      .get(`/yearlyCategorySpend/${this.props.username}`)
       .then((response) => {
         console.log(response)
 

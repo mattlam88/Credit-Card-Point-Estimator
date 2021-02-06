@@ -73,7 +73,7 @@ def retrive_user_budget():
             non_category_spend, utility_spend, gas_spend]
 
     monthly_data = [username, month, year, restaurant_spend, grocery_spend,
-            non_category_spend, utility_spend, gas_spend, 0]
+                    non_category_spend, utility_spend, gas_spend, 0]
 
     user_budget = UserBudgetFormDAO()
     user_budget.add_user_budget_form(data)
@@ -82,19 +82,18 @@ def retrive_user_budget():
     month_budget.add_monthly_budget(monthly_data)
 
     monthly_budget_service = MonthlyBudgetService()
-    monthly_budget_service.calculate_total_monthly_budget(username, month, year)
+    monthly_budget_service.calculate_total_monthly_budget(
+        username, month, year)
 
     # Will need to add the monthly functions here so it won't keep running 12 times in the yearlyCategorySpend function
     # or I can split up the code where it would post into the database and return the json
     return "User Budget JSON Posted"
 
 
-@app.route('/yearlyCategorySpend', methods=['GET', 'REQUEST'])
-def get_yearly_category_user_spend():
+@app.route('/yearlyCategorySpend/<username>', methods=['GET', 'REQUEST'])
+def get_yearly_category_user_spend(username):
     # will have to SELECT form data from userBudgetForm and then INSERT INTO monthlyBudget
-    username = "Matt"
     year = 2020
-    data = UserBudgetFormDAO()
     ytd_budget_spend = YearlyBudgetService()
     year_cat_spend = YearlyBudgetDAO()
 
@@ -118,7 +117,6 @@ def get_yearly_category_user_spend():
 @app.route('/combinedSpendAndPoints/<username>', methods=['GET'])
 def send_spend_points(username):
     json_data = {}
-    # username = "Matt"
     year = 2020
 
     total_month_spend = MonthlyBudgetDAO()
@@ -133,7 +131,6 @@ def send_spend_points(username):
 
 @app.route('/monthlySpendAndPoints/<username>', methods=['GET', 'REQUEST'])
 def get_user_monthly_spend(username):
-    # username = "Matt"
     year = 2020
 
     total_month_spend = MonthlyBudgetDAO()
@@ -195,8 +192,7 @@ def get_credit_card_points(username):
 
     user_reward_points.insert_new_user_reward_points(rewards_data)
 
-    reward_points_data = user_reward_points.get_all_monthly_reward_points(
-        username, year)
+    reward_points_data = user_reward_points.get_all_monthly_reward_points(username, year)
     reward_json = {
         "January": reward_points_data.jan_points,
         "February": reward_points_data.feb_points,

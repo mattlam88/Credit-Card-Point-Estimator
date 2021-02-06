@@ -10,13 +10,11 @@ import LineGraph from './components/PointsMonthlySpendGraph';
 import React, { useState } from "react";
 
 function App()  {
-  const test = data => console.log(data)
   const [usern, setUsern] = useState("")
   const updateUsern = (userInfo) => {
     console.log(userInfo);
     setUsern(userInfo);
   }
-  // use state hook create hook to create username state and then pass it down.
   
   return (
     <div>
@@ -40,7 +38,7 @@ function App()  {
       </div>
 
       <div class="graph_1">
-        <PieGraph  />
+        <PieGraph username={usern}/>
       </div>
       <div class="graph_2">
 
